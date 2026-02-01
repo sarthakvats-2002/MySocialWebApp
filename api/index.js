@@ -30,7 +30,7 @@ dotenv.config();
 // CORS configuration
 const corsOptions = {
     origin: [
-        'https://echoconnect.netlify.app',  // Your Netlify URL
+        'https://echoconnect-social.netlify.app/',  // Your Netlify URL
         'http://localhost:3000'  // For local testing
     ],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
