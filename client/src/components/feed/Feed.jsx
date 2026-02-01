@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import Post from "../post/Post";
 import Share from "../share/Share";
 import Stories from "../stories/Stories";
@@ -11,7 +11,7 @@ export default function Feed({ username }) {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
       const res = username
@@ -27,11 +27,11 @@ export default function Feed({ username }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [username, user._id]);
 
   useEffect(() => {
     fetchPosts();
-  }, [username, user._id]);
+  }, [fetchPosts]);
 
   const handleNewPost = (newPost) => {
     setPosts([newPost, ...posts]);
