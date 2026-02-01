@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import Post from "../post/Post";
 import Share from "../share/Share";
 import Stories from "../stories/Stories";
+import PostSkeleton from "../skeleton/PostSkeleton";
 import "./feed.css";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../apiCalls";
@@ -49,7 +50,11 @@ export default function Feed({ username }) {
           <Share onNewPost={handleNewPost} />
         )}
         {loading ? (
-          <div className="loadingSpinner">Loading posts...</div>
+          <>
+            <PostSkeleton />
+            <PostSkeleton />
+            <PostSkeleton />
+          </>
         ) : posts.length === 0 ? (
           <div className="noPosts">No posts yet. Start sharing!</div>
         ) : (

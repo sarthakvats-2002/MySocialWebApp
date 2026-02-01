@@ -1,5 +1,6 @@
 import "./rightbar.css";
 import Online from "../online/Online";
+import UserSkeleton from "../skeleton/UserSkeleton";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -63,6 +64,7 @@ export default function Rightbar({ user }) {
     const getSuggestions = async () => {
       if (!user && currentUser?._id) {
         try {
+          setLoading(true);
           // Get all users and filter out current user and already followed users
           const res = await api.get("/users/all");
           const filtered = res.data
@@ -75,6 +77,8 @@ export default function Rightbar({ user }) {
           setSuggestions(filtered);
         } catch (err) {
           console.error("Error fetching suggestions:", err);
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -126,7 +130,14 @@ export default function Rightbar({ user }) {
               </Link>
             </div>
             <div className="suggestionsList">
-              {suggestions.map((suggestion) => (
+              {loading ? (
+                <>
+                  <UserSkeleton />
+                  <UserSkeleton />
+                  <UserSkeleton />
+                </>
+              ) : (
+                suggestions.map((suggestion) => (
                 <div key={suggestion._id} className="suggestionItem">
                   <Link
                     to={`/profile/${suggestion.username}`}
@@ -157,7 +168,8 @@ export default function Rightbar({ user }) {
                     Follow
                   </button>
                 </div>
-              ))}
+              ))
+              )}
             </div>
           </div>
         )}
