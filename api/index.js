@@ -69,6 +69,24 @@ app.use(morgan("common"));
 app.use(cors(corsOptions));
 app.use("/api/", limiter);
 
+// Passport & Session Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your_session_secret_change_in_production",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport Config
+require("./config/passport")(passport);
+
 // Serve static files
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
@@ -116,6 +134,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 
 // API Routes
 app.use("/api/auth", authRoute);
+app.use("/api/auth", googleAuthRoute); // Google OAuth routes
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/conversations", conversationRoute);

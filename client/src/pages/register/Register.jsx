@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import api from "../../apiCalls";
 import { PersonAdd, Email, Lock, Visibility, VisibilityOff } from "@material-ui/icons";
+import GoogleAuthButton from "../../components/googleAuth/GoogleAuthButton";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
@@ -215,6 +216,12 @@ export default function Register() {
                   </>
                 )}
               </button>
+
+              <div className="divider">
+                <span>or</span>
+              </div>
+
+              <GoogleAuthButton />
 
               <div className="divider">
                 <span>Already have an account?</span>

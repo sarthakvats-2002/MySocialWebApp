@@ -4,6 +4,7 @@ import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Email, Lock, Visibility, VisibilityOff, ExitToApp } from "@material-ui/icons";
+import GoogleAuthButton from "../../components/googleAuth/GoogleAuthButton";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
@@ -169,6 +170,12 @@ export default function Login() {
                   Invalid credentials. Please try again.
                 </div>
               )}
+
+              <div className="divider">
+                <span>or</span>
+              </div>
+
+              <GoogleAuthButton />
 
               <div className="divider">
                 <span>Don't have an account?</span>

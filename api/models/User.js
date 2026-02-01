@@ -15,11 +15,21 @@ const UserSchema = new mongoose.Schema(
       max: 50,
       unique: true,
     },
-    password: {
-      type: String,
-      required: true,
-      min: 6,
+  password: {
+    type: String,
+    required: function() {
+      return !this.isGoogleUser; // Password not required for Google users
     },
+    min: 6,
+  },
+  isGoogleUser: {
+    type: Boolean,
+    default: false,
+  },
+  googleId: {
+    type: String,
+    sparse: true, // Allows null values but unique when set
+  },
     profilePicture: {
       type: String,
       default: "",

@@ -1,0 +1,46 @@
+.google-auth-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: white;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.google-auth-button:hover {
+  background-color: #f8f9fa;
+  border-color: #c6c6c6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.google-auth-button:active {
+  background-color: #f1f3f4;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Dark Mode */
+.dark .google-auth-button {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark .google-auth-button:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--text-secondary);
+}
+
