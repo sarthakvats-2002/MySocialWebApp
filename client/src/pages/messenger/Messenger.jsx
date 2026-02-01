@@ -3,6 +3,7 @@ import "./messenger.css";
 import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
+import PageTransition from "../../components/animations/PageTransition";
 import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 import api from "../../apiCalls";
@@ -143,7 +144,8 @@ export default function Messenger() {
   return (
     <>
       <Topbar />
-      <div className="messenger">
+      <PageTransition>
+        <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <h3 className="chatMenuTitle">Conversations</h3>
@@ -206,6 +208,7 @@ export default function Messenger() {
           </div>
         </div>
       </div>
+      </PageTransition>
     </>
   );
 }
