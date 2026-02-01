@@ -150,5 +150,19 @@ router.put("/:id/unfollow", async(req,res)=>{
   }
 });
 
+// Get all users (for suggestions)
+router.get("/all", async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+    const users = await User.find()
+      .select("-password")
+      .limit(limit)
+      .sort({ createdAt: -1 });
+    res.status(200).json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Error fetching users" });
+  }
+});
 
 module.exports = router
