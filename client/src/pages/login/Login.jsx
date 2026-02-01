@@ -17,11 +17,39 @@ export default function Login() {
     
     try {
       await loginCall(
-        { email: email.current.value, password: password.current.value },
+        { 
+          email: email.current.value.trim(), 
+          password: password.current.value 
+        },
         dispatch
       );
+      toast.success("✅ Login successful! Welcome back!");
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Login failed. Please check your credentials.");
+      console.error("Login error:", err);
+      
+      // Handle validation errors
+      if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
+        const firstError = err.response.data.errors[0];
+        toast.error(`❌ ${firstError.msg}`);
+        
+        if (firstError.param === 'email') email.current.focus();
+        else if (firstError.param === 'password') password.current.focus();
+      }
+      // Handle authentication errors
+      else if (err.response?.status === 404) {
+        toast.error("❌ No account found with this email address.");
+        email.current.focus();
+      }
+      else if (err.response?.status === 400) {
+        toast.error("❌ Incorrect password. Please try again.");
+        password.current.focus();
+      }
+      else if (err.response?.data?.message) {
+        toast.error(`❌ ${err.response.data.message}`);
+      }
+      else {
+        toast.error("❌ Login failed. Please check your credentials and try again.");
+      }
     }
   };
 

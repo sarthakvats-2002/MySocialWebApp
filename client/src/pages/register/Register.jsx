@@ -19,32 +19,60 @@ export default function Register() {
   const handleClick = async (e) => {
     e.preventDefault();
     
+    // Clear previous custom validity
+    confirmPassword.current.setCustomValidity("");
+    
     if (confirmPassword.current.value !== password.current.value) {
-      toast.error("Passwords don't match!");
+      toast.error("❌ Passwords don't match!");
+      confirmPassword.current.focus();
       return;
     }
 
     if (password.current.value.length < 6) {
-      toast.error("Password must be at least 6 characters!");
+      toast.error("❌ Password must be at least 6 characters!");
+      password.current.focus();
       return;
     }
 
     const user = {
-      username: username.current.value,
-      email: email.current.value,
+      username: username.current.value.trim(),
+      email: email.current.value.trim(),
       password: password.current.value,
     };
 
     try {
       setLoading(true);
-      await api.post("/auth/register", user);
-      toast.success("Account created successfully! 🎉");
+      const response = await api.post("/auth/register", user);
+      toast.success("✅ Account created successfully! Redirecting...");
+      
+      // Store token
+      localStorage.setItem("token", response.data.token);
+      
       setTimeout(() => {
         history.push("/login");
       }, 1500);
     } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Registration failed. Please try again.");
+      console.error("Registration error:", err);
+      
+      // Handle validation errors
+      if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
+        // Show first validation error
+        const firstError = err.response.data.errors[0];
+        toast.error(`❌ ${firstError.msg}`);
+        
+        // Focus on the problematic field
+        if (firstError.param === 'username') username.current.focus();
+        else if (firstError.param === 'email') email.current.focus();
+        else if (firstError.param === 'password') password.current.focus();
+      } 
+      // Handle other errors
+      else if (err.response?.data?.message) {
+        toast.error(`❌ ${err.response.data.message}`);
+      } 
+      // Fallback
+      else {
+        toast.error("❌ Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
