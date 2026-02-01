@@ -1,45 +1,59 @@
 import "./share.css";
 import {
   PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import api from "../../apiCalls";
+import toast from "react-hot-toast";
 
-export default function Share() {
+export default function Share({ onNewPost }) {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const desc = useRef();
+  const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
-  const baseUrl = "https://socialappbackend-2wht.onrender.com/api"
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    
+    if (!desc.trim() && !file) {
+      toast.error("Please write something or add an image");
+      return;
+    }
+
+    setLoading(true);
     const newPost = {
       userId: user._id,
-      desc: desc.current.value,
+      desc: desc,
     };
-    if (file) {
-      const data = new FormData();
-      const fileName =  file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
-      try {
-        await axios.post(baseUrl +"/upload", data);
-      } catch (err) {}
-    }
+
     try {
-      if(desc.current.value){
-      await axios.post(baseUrl +"/posts", newPost);
-      window.location.reload();
+      if (file) {
+        const data = new FormData();
+        data.append("name", Date.now() + file.name);
+        data.append("file", file);
+        
+        const uploadRes = await api.post("/upload", data);
+        newPost.img = uploadRes.data.filename;
       }
-    } catch (err) {}
+
+      const res = await api.post("/posts", newPost);
+      
+      if (onNewPost) {
+        onNewPost(res.data);
+      }
+
+      setDesc("");
+      setFile(null);
+      toast.success("Post shared successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to share post");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,9 +70,10 @@ export default function Share() {
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.username + "?"}
+            placeholder={"What's on your mind, " + user.username + "?"}
             className="shareInput"
-            ref={desc}
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
           />
         </div>
         <hr className="shareHr" />
@@ -72,30 +87,22 @@ export default function Share() {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Photo/Video</span>
               <input
                 style={{ display: "none" }}
                 type="file"
                 id="file"
-                accept=".png,.jpeg,.jpg"
+                accept=".png,.jpeg,.jpg,.gif,.webp"
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            <div className="shareOption">
-              <Label htmlColor="blue" className="shareIcon" />
-              <span className="shareOptionText">Tag</span>
-            </div>
-            <div className="shareOption">
-              <Room htmlColor="green" className="shareIcon" />
-              <span className="shareOptionText">Location</span>
-            </div>
-            <div className="shareOption">
-              <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
-              <span className="shareOptionText">Feelings</span>
-            </div>
           </div>
-          <button className="shareButton" type="submit">
-            Share
+          <button 
+            className="shareButton" 
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Sharing..." : "Share"}
           </button>
         </form>
       </div>

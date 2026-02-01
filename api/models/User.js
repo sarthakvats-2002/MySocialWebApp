@@ -56,6 +56,18 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       enum: [1, 2, 3],
     },
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
+    lastSeen: {
+      type: Date,
+      default: Date.now,
+    },
+    socketId: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

@@ -1,0 +1,135 @@
+.comments {
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.commentInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.commentInputImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentForm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-secondary);
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: 1px solid var(--border-color);
+}
+
+.commentInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.commentSubmitButton {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.commentSubmitButton:hover {
+  transform: scale(1.2);
+}
+
+.commentList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.commentItem {
+  display: flex;
+  gap: 10px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.commentImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentContent {
+  flex: 1;
+}
+
+.commentBubble {
+  background-color: var(--bg-secondary);
+  padding: 10px 15px;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+}
+
+.commentUsername {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.commentText {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.commentBottom {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+  padding-left: 15px;
+}
+
+.commentTime {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.commentDelete {
+  font-size: 11px;
+  color: #f44336;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.2s ease;
+}
+
+.commentDelete:hover {
+  text-decoration: underline;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

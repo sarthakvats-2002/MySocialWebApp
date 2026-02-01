@@ -1,0 +1,55 @@
+.conversation {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.conversation:hover {
+  background-color: var(--bg-secondary);
+}
+
+.conversationImgContainer {
+  position: relative;
+  margin-right: 12px;
+}
+
+.conversationImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.conversationOnlineBadge {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #44b700;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  border: 2px solid var(--bg-primary);
+}
+
+.conversationInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.conversationName {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.conversationLastMessage {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+

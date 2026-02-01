@@ -53,8 +53,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-// like/dislike a post
-
+// like/dislike a post (legacy support)
 router.put("/:id/like", async(req,res)=>{
     try{
      const post = await Post.findById(req.params.id);
@@ -66,6 +65,36 @@ router.put("/:id/like", async(req,res)=>{
         await post.updateOne({$pull: { likes: req.body.userId}});
         res.status(200).json("The post has been disliked");
      }
+    }catch(err){
+     res.status(500).json(err);
+    }
+});
+
+// Add reaction to post (new feature)
+router.put("/:id/react", async(req,res)=>{
+    try{
+     const post = await Post.findById(req.params.id);
+     const { userId, reactionType } = req.body; // reactionType: like, love, wow, sad, angry
+     
+     if(!post) {
+       return res.status(404).json({ message: "Post not found" });
+     }
+
+     // Remove user from all reaction types first
+     const reactionTypes = ['like', 'love', 'wow', 'sad', 'angry'];
+     for(const type of reactionTypes) {
+       if(post.reactions[type].includes(userId)) {
+         post.reactions[type] = post.reactions[type].filter(id => id !== userId);
+       }
+     }
+
+     // If reactionType provided, add to that reaction
+     if(reactionType && reactionTypes.includes(reactionType)) {
+       post.reactions[reactionType].push(userId);
+     }
+
+     await post.save();
+     res.status(200).json({ message: "Reaction updated", reactions: post.reactions });
     }catch(err){
      res.status(500).json(err);
     }

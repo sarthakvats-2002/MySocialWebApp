@@ -1,0 +1,155 @@
+.messenger {
+  height: calc(100vh - 70px);
+  display: flex;
+}
+
+.chatMenu {
+  flex: 3;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+}
+
+.chatMenuWrapper {
+  padding: 15px;
+  height: 100%;
+}
+
+.chatMenuTitle {
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  font-size: 20px;
+}
+
+.chatBox {
+  flex: 7;
+  background-color: var(--bg-secondary);
+}
+
+.chatBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  height: 100%;
+}
+
+.chatBoxTop {
+  height: calc(100% - 80px);
+  overflow-y: scroll;
+  padding: 20px;
+}
+
+.chatBoxTop::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chatBoxTop::-webkit-scrollbar-track {
+  background-color: var(--bg-primary);
+}
+
+.chatBoxTop::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.chatBoxBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  gap: 10px;
+}
+
+.chatMessageInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 14px;
+  resize: none;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: inherit;
+  max-height: 100px;
+}
+
+.chatMessageInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.chatSubmitButton {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.chatSubmitButton:hover {
+  transform: scale(1.1);
+}
+
+.noConversationText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 5px;
+  padding: 10px 15px;
+  margin-left: 10px;
+}
+
+.typingIndicator span {
+  height: 8px;
+  width: 8px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typingIndicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chatMenu {
+    flex: 1;
+  }
+
+  .noConversationText {
+    font-size: 30px;
+  }
+}
+

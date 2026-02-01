@@ -1,0 +1,51 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.message.own {
+  align-items: flex-end;
+}
+
+.messageTop {
+  display: flex;
+  max-width: 70%;
+}
+
+.messageText {
+  padding: 12px 16px;
+  border-radius: 18px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  border: 1px solid var(--border-color);
+  margin: 0;
+}
+
+.message.own .messageText {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.messageBottom {
+  font-size: 11px;
+  margin-top: 5px;
+  color: var(--text-secondary);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

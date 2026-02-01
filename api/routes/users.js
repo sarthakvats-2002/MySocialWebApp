@@ -80,6 +80,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+//search users
+router.get("/search", async (req, res) => {
+  const searchQuery = req.query.q;
+  try {
+    if (!searchQuery || searchQuery.trim() === "") {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const users = await User.find({
+      $or: [
+        { username: { $regex: searchQuery, $options: "i" } },
+        { email: { $regex: searchQuery, $options: "i" } },
+      ],
+    })
+      .select("-password")
+      .limit(20);
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Error searching users", error: err });
+  }
+});
+
 //follow a user
 
 router.put("/:id/follow", async(req,res)=>{

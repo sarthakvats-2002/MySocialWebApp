@@ -1,19 +1,21 @@
 import "./post.css";
-import { MoreVert, Delete } from "@material-ui/icons";
+import { MoreVert, Delete, ChatBubbleOutline } from "@material-ui/icons";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import Comments from "../comments/Comments";
+import api from "../../apiCalls";
+import toast from "react-hot-toast";
 
-export default function Post({ post }) {
+export default function Post({ post, onDelete }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const [user, setUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
-  const baseUrl = "https://socialappbackend-2wht.onrender.com/api"
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -21,30 +23,40 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(baseUrl + `/users?userId=${post.userId}`);
-      setUser(res.data);
+      try {
+        const res = await api.get(`/users?userId=${post.userId}`);
+        setUser(res.data);
+      } catch (err) {
+        console.error(err);
+      }
     };
     fetchUser();
   }, [post.userId]);
 
-  const likeHandler = () => {
+  const likeHandler = async () => {
     try {
-      axios.put(baseUrl + "/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (err) { }
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
+      await api.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+      setLike(isLiked ? like - 1 : like + 1);
+      setIsLiked(!isLiked);
+    } catch (err) {
+      toast.error("Failed to like post");
+    }
   };
 
   const deleteHandler = async () => {
     try {
-      await axios.delete(baseUrl + `/posts/${post._id}`, { userId: user._id });
-      window.location.reload();
-    } catch (err) { }
-  }
+      await api.delete(`/posts/${post._id}`, { data: { userId: currentUser._id } });
+      toast.success("Post deleted successfully!");
+      if (onDelete) onDelete(post._id);
+    } catch (err) {
+      toast.error("Failed to delete post");
+    }
+  };
 
   const controlMenu = () => {
-    setIsOpened(wasOpened => !wasOpened);
-  }
+    setIsOpened((wasOpened) => !wasOpened);
+  };
+
   return (
     <div className="post">
       <div className="postWrapper">
@@ -61,38 +73,44 @@ export default function Post({ post }) {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
-            <span className="postDate">{format(post.createdAt)}</span>
+            <div className="postUserInfo">
+              <span className="postUsername">{user.username}</span>
+              <span className="postDate">{format(post.createdAt)}</span>
+            </div>
           </div>
           <div className="postTopRight" onClick={controlMenu}>
             <MoreVert />
-            {isOpened && currentUser._id === post.userId ? <div className="deleteBox" onClick={deleteHandler}>Delete Post <Delete /></div> : <span></span>}
+            {isOpened && currentUser._id === post.userId && (
+              <div className="deleteBox" onClick={deleteHandler}>
+                Delete Post <Delete />
+              </div>
+            )}
           </div>
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={PF + post.img} alt="" />
+          {post.img && <img className="postImg" src={PF + post.img} alt="" />}
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
             <img
-              className="likeIcon"
+              className={`likeIcon ${isLiked ? "liked" : ""}`}
               src={`${PF}like.png`}
               onClick={likeHandler}
               alt=""
             />
-            <img
-              className="likeIcon"
-              src={`${PF}heart.png`}
-              onClick={likeHandler}
-              alt=""
-            />
-            <span className="postLikeCounter">{like} people like it</span>
+            <span className="postLikeCounter">{like} likes</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            <span
+              className="postCommentText"
+              onClick={() => setShowComments(!showComments)}
+            >
+              <ChatBubbleOutline fontSize="small" /> {post.comments || 0} comments
+            </span>
           </div>
         </div>
+        {showComments && <Comments postId={post._id} />}
       </div>
     </div>
   );
