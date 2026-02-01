@@ -26,9 +26,16 @@ router.post("/register", validateRegistration, async (req, res) => {
     });
     
     if (existingUser) {
-      return res.status(400).json({ 
-        message: "User with this email or username already exists" 
-      });
+      if (existingUser.email === req.body.email) {
+        return res.status(400).json({ 
+          message: "An account with this email already exists. Please login or use a different email." 
+        });
+      }
+      if (existingUser.username === req.body.username) {
+        return res.status(400).json({ 
+          message: "This username is already taken. Please choose a different username." 
+        });
+      }
     }
 
     // Generate hashed password
@@ -58,7 +65,7 @@ router.post("/register", validateRegistration, async (req, res) => {
     });
   } catch (err) {
     console.error("Registration error:", err);
-    res.status(500).json({ message: "Server error during registration" });
+    res.status(500).json({ message: "We're having trouble creating your account. Please try again in a moment." });
   }
 });
 
@@ -67,12 +74,12 @@ router.post("/login", validateLogin, async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "No account found with this email address. Please check your email or register a new account." });
     }
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Incorrect password. Please try again or reset your password." });
     }
 
     // Generate token
@@ -93,7 +100,7 @@ router.post("/login", validateLogin, async (req, res) => {
     });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).json({ message: "Server error during login" });
+    res.status(500).json({ message: "We're having trouble logging you in. Please try again in a moment." });
   }
 });
 
