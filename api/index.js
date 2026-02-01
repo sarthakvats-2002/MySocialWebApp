@@ -29,15 +29,13 @@ dotenv.config();
 
 // CORS configuration
 const corsOptions = {
-  origin: [
-    'https://echoconnect.netlify.app',
-    'http://localhost:3000',
-    // Add your actual Netlify URL here after deployment
-    process.env.FRONTEND_URL || 'http://localhost:3000'
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  credentials: true,
-  optionsSuccessStatus: 204,
+    origin: [
+        'https://echoconnect.netlify.app',  // Your Netlify URL
+        'http://localhost:3000'  // For local testing
+    ],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    credentials: true,
+    optionsSuccessStatus: 204,
 };
 
 // Rate limiting
