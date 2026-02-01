@@ -73,24 +73,24 @@ export default function Login() {
             </p>
             <div className="feature-list">
               <div className="feature-item">
-                <div className="feature-icon">⚡</div>
+                <div className="feature-icon">💬</div>
                 <div className="feature-text">
-                  <h4>Lightning Fast</h4>
-                  <p>Real-time updates and notifications</p>
+                  <h4>Real-time Chat</h4>
+                  <p>Instant messaging with friends</p>
                 </div>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🔒</div>
+                <div className="feature-icon">📖</div>
                 <div className="feature-text">
-                  <h4>Secure & Private</h4>
-                  <p>Your data is safe with us</p>
+                  <h4>Stories</h4>
+                  <p>Share moments that matter</p>
                 </div>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🌍</div>
+                <div className="feature-icon">🔔</div>
                 <div className="feature-text">
-                  <h4>Global Community</h4>
-                  <p>Connect with people worldwide</p>
+                  <h4>Live Notifications</h4>
+                  <p>Never miss an update</p>
                 </div>
               </div>
             </div>

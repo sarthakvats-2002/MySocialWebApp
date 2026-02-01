@@ -112,10 +112,10 @@ export default function Register() {
                 </div>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🌙</div>
+                <div className="feature-icon">🔔</div>
                 <div className="feature-text">
-                  <h4>Dark Mode</h4>
-                  <p>Easy on your eyes</p>
+                  <h4>Live Notifications</h4>
+                  <p>Never miss an update</p>
                 </div>
               </div>
             </div>
