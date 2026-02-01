@@ -1,89 +1,206 @@
 .share {
-    width: 100%;
-    border-radius: 10px;
-    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-  }
-  
-  .shareWrapper {
-    padding: 10px;
-  }
-  
-  .shareTop {
-    display: flex;
-    align-items: center;
-  }
-  
-  .shareProfileImg {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .shareInput {
-    border: none;
-    width: 80%;
-  }
-  
-  .shareInput:focus {
-    outline: none;
-  }
-  
-  .shareHr {
-    margin: 20px;
-  }
-  
-  .shareBottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .shareOptions{
-      display: flex;
-      margin-left: 20px;
-  }
-  
-  .shareOption{
-      display: flex;
-      align-items: center;
-      margin-right: 15px;
-      cursor: pointer;
-  }
-  
-  .shareIcon{
-      font-size: 18px;
-      margin-right: 3px;
-  }
-  
-  .shareOptionText{
-      font-size: 14px;
-      font-weight: 500;
-  }
-  
-  .shareButton{
-      border: none;
-      padding: 7px;
-      border-radius: 5px;
-      background-color: green;
-      font-weight: 500;
-      margin-right: 20px;
-      cursor: pointer;
-      color: white;
-  }
-  .shareImgContainer{
-    padding: 0 20px 10px 20px;
-    position:relative;
-  }
-  .shareImg{
-    width:100%;
-    object-fit:cover;
-  }
-  .shareCancelImg{
-     position:absolute;
-     top:0;
-     right: 20px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
 
+.shareWrapper {
+  padding: 16px;
+}
+
+.shareTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.shareProfileImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.shareInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+  resize: none;
+  min-height: 48px;
+  max-height: 200px;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.shareInput:focus {
+  background-color: var(--bg-secondary);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.1);
+}
+
+.shareInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.shareHr {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+.shareBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.shareOptions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.shareOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.shareOption:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.shareIcon {
+  font-size: 22px;
+}
+
+.shareOptionText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.shareButton {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.shareButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 149, 246, 0.4);
+}
+
+.shareButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Image Preview */
+.shareImgContainer {
+  position: relative;
+  margin-top: 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.shareImg {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.shareCancelImg {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.shareCancelImg:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Color Variants */
+.shareOption.photo .shareIcon {
+  color: #45bd62;
+}
+
+.shareOption.video .shareIcon {
+  color: #e7475e;
+}
+
+.shareOption.tag .shareIcon {
+  color: #1877f2;
+}
+
+.shareOption.location .shareIcon {
+  color: #f7b928;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .shareWrapper {
+    padding: 12px;
   }
+
+  .shareOptions {
+    gap: 8px;
+  }
+
+  .shareOption {
+    padding: 6px 12px;
+  }
+
+  .shareOptionText {
+    display: none;
+  }
+
+  .shareButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Loading State */
+.share.uploading {
+  opacity: 0.6;
+  pointer-events: none;
+}

@@ -1,68 +1,79 @@
-import CloseFriend from "../closeFriends/CloseFriend";
-import "./leftbar.css"
-import { RssFeed, Announcement, QuestionAnswer, Help, PeopleOutline, WorkOutline, Event, DateRange } from "@material-ui/icons";
-import { Users } from "../../dummyData";
-import { useHistory } from "react-router";
-import { loginCall } from "../../apiCalls";
-import { AuthContext } from "../../context/AuthContext";
+import "./leftbar.css";
+import {
+  Home,
+  Chat,
+  People,
+  Notifications,
+  Settings,
+  ExitToApp,
+} from "@material-ui/icons";
+import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { logoutCall } from "../../apiCalls";
 
 export default function Leftbar() {
-    const { dispatch } = useContext(AuthContext);
-    const history = useHistory();
-    const handleClick = async (e) => {
-        localStorage.clear();
-        loginCall(
-            { email: null, password: null },
-            dispatch
-          );
-        history.push("/login");
-    }
-    return (
-        <div className="leftbar">
-            <div className="leftbarWrapper">
-                <ul className="leftbarList">
-                    <li className="leftbarListItem">
-                        <RssFeed className="leftbarIcon" />
-                        <span className="leftbarListItemText">Feed</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <Announcement className="leftbarIcon" />
-                        <span className="leftbarListItemText">Announcement</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <QuestionAnswer className="leftbarIcon" />
-                        <span className="leftbarListItemText">QnA</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <Help className="leftbarIcon" />
-                        <span className="leftbarListItemText">Help</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <PeopleOutline className="leftbarIcon" />
-                        <span className="leftbarListItemText">PeopleOutline</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <WorkOutline className="leftbarIcon" />
-                        <span className="leftbarListItemText">WorkOutline</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <Event className="leftbarIcon" />
-                        <span className="leftbarListItemText">Event</span>
-                    </li>
-                    <li className="leftbarListItem">
-                        <DateRange className="leftbarIcon" />
-                        <span className="leftbarListItemText">DateRange</span>
-                    </li>
-                </ul>
-                <button className="leftbarButton" onClick={handleClick}>Log Out</button>
-                <hr className="leftbarHr" />
-                <ul className="leftbarFriendList">
-                    {Users.map((u) => (
-                        <CloseFriend key={u.id} user={u} />
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
+  const { user, dispatch } = useContext(AuthContext);
+  const history = useHistory();
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleLogout = async () => {
+    await logoutCall(user._id, dispatch);
+    history.push("/login");
+  };
+
+  const menuItems = [
+    { icon: <Home />, text: "Home", link: "/" },
+    { icon: <Chat />, text: "Messages", link: "/messenger" },
+    { icon: <People />, text: "Friends", link: "/" },
+    { icon: <Notifications />, text: "Notifications", link: "/" },
+    { icon: <Settings />, text: "Settings", link: "/" },
+  ];
+
+  return (
+    <div className="leftbar">
+      <div className="leftbarWrapper">
+        {/* User Profile Card */}
+        <Link to={`/profile/${user.username}`} className="leftbarProfileCard">
+          <img
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "noAvatar.png"
+            }
+            alt=""
+            className="leftbarProfileImg"
+          />
+          <div className="leftbarProfileInfo">
+            <span className="leftbarProfileName">{user.username}</span>
+            <span className="leftbarProfileBio">View profile</span>
+          </div>
+        </Link>
+
+        <hr className="leftbarDivider" />
+
+        {/* Navigation Menu */}
+        <nav className="leftbarNav">
+          {menuItems.map((item, index) => (
+            <Link
+              to={item.link}
+              key={index}
+              className="leftbarNavItem"
+            >
+              <div className="leftbarNavIcon">{item.icon}</div>
+              <span className="leftbarNavText">{item.text}</span>
+            </Link>
+          ))}
+        </nav>
+
+        <hr className="leftbarDivider" />
+
+        {/* Logout Button */}
+        <button className="leftbarLogoutBtn" onClick={handleLogout}>
+          <ExitToApp className="leftbarNavIcon" />
+          <span className="leftbarNavText">Logout</span>
+        </button>
+      </div>
+    </div>
+  );
 }

@@ -1,45 +1,44 @@
 .feed {
-  flex: 1;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
+  flex: 5.5;
+  padding: 20px;
+  background-color: var(--bg-secondary);
+  min-height: calc(100vh - 60px);
 }
 
 .feedWrapper {
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.loadingSpinner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  color: var(--text-secondary);
-  font-size: 15px;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .noPosts {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-secondary);
-  font-size: 15px;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
+  margin-top: 20px;
 }
 
+.noPosts p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
   .feed {
-    max-width: 100%;
+    flex: 1;
+    padding: 16px;
   }
 }
 
 @media (max-width: 768px) {
+  .feed {
+    padding: 12px;
+  }
+
   .feedWrapper {
-    gap: 16px;
-    padding: 0;
+    max-width: 100%;
   }
 }

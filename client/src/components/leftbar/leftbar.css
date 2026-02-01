@@ -1,72 +1,167 @@
 .leftbar {
-    flex: 3;
-    height: calc(100vh - 50px);
-    overflow-y: scroll;
-    position: sticky;
-    top: 50px;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: rgb(179, 179, 179);
-  }
-  
-  .leftbarWrapper {
-    padding: 20px;
-  }
-  
-  .leftbarList {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  .leftbarListItem {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .leftbarFriendImg{
-    width:32px;
-    height:32px;
-    border-radius: 50%;
-    object-fit:cover;
-    margin-right: 10px;
+  flex: 3;
+  max-width: 280px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  position: sticky;
+  top: 60px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
 }
-  
-  .leftbarIcon {
-    margin-right: 15px;
-  }
-  
-  .leftbarButton {
-    width: 150px;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: 500;
-    cursor: pointer;
-  }
 
-  .leftbarFriend{
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+.leftbarWrapper {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Profile Card */
+.leftbarProfileCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 0 12px;
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.leftbarProfileCard:hover {
+  background-color: var(--bg-tertiary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.leftbarProfileImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.leftbarProfileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.leftbarProfileName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leftbarProfileBio {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Divider */
+.leftbarDivider {
+  border: none;
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 8px 16px;
+}
+
+/* Navigation */
+.leftbarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+}
+
+.leftbarNavItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.leftbarNavItem:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.leftbarNavItem.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.leftbarNavIcon {
+  color: inherit;
+  font-size: 24px;
+}
+
+.leftbarNavText {
+  font-size: 15px;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* Logout Button */
+.leftbarLogoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 28px;
+  margin: 0 12px;
+  border-radius: var(--radius-md);
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.leftbarLogoutBtn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--error-color);
+}
+
+.leftbarLogoutBtn .leftbarNavIcon {
+  color: inherit;
+}
+
+/* Scrollbar */
+.leftbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leftbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.leftbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.leftbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .leftbar {
+    display: none;
   }
-  
-  .leftbarHr {
-    margin: 20px 0;
-  }
-  
-  .leftbarFriendList {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  
+}
