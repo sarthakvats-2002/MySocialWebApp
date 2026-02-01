@@ -3,6 +3,7 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Messenger from "./pages/messenger/Messenger";
+import AuthCallback from "./pages/auth/AuthCallback";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
+        </Route>
+        <Route path="/auth/callback">
+          <AuthCallback />
         </Route>
         <Route path="/messenger">
           {user ? <Messenger /> : <Redirect to="/login" />}
