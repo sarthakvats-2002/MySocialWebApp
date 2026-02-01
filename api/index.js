@@ -30,7 +30,7 @@ dotenv.config();
 // CORS configuration
 const corsOptions = {
     origin: [
-        'https://echoconnect-social.netlify.app/',  // Your Netlify URL
+        'https://echoconnect-social.netlify.app',  // Your Netlify URL (no trailing slash!)
         'http://localhost:3000'  // For local testing
     ],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -128,6 +128,7 @@ app.use("/api/stories", storyRoute);
 const io = new Server(server, {
   cors: {
     origin: [
+      'https://echoconnect-social.netlify.app',
       'https://echoconnect.netlify.app',
       'http://localhost:3000',
       process.env.FRONTEND_URL || 'http://localhost:3000'
