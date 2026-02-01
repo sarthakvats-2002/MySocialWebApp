@@ -20,6 +20,7 @@ export default function Topbar() {
   const { user, dispatch } = useContext(AuthContext);
   const { darkMode, toggle } = useContext(ThemeContext);
   const { onlineUsers, socket } = useContext(SocketContext);
+  const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
