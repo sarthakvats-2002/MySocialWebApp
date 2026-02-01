@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: echoconnect-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd api && npm install
+    startCommand: cd api && npm start
+    healthCheckPath: /api/users/search?q=test
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8800
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
+
