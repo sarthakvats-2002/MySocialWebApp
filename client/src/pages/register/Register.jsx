@@ -4,7 +4,8 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import api from "../../apiCalls";
 import { PersonAdd, Email, Lock, Visibility, VisibilityOff } from "@material-ui/icons";
-import GoogleAuthButton from "../../components/googleAuth/GoogleAuthButton";
+// Google Auth temporarily disabled
+// import GoogleAuthButton from "../../components/googleAuth/GoogleAuthButton";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
@@ -44,7 +45,9 @@ export default function Register() {
     try {
       setLoading(true);
       const response = await api.post("/auth/register", user);
-      toast.success("✅ Account created successfully! Redirecting...");
+      toast.success("✅ Account created successfully! Redirecting...", {
+        duration: 1500,
+      });
       
       // Store token
       localStorage.setItem("token", response.data.token);
@@ -217,11 +220,12 @@ export default function Register() {
                 )}
               </button>
 
-              <div className="divider">
+              {/* Google Auth temporarily disabled */}
+              {/* <div className="divider">
                 <span>or</span>
               </div>
 
-              <GoogleAuthButton />
+              <GoogleAuthButton /> */}
 
               <div className="divider">
                 <span>Already have an account?</span>
