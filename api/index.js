@@ -86,8 +86,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Passport Config
-require("./config/passport")(passport);
+// Passport Config (only if Google OAuth is configured)
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  require("./config/passport")(passport);
+  console.log("✅ Google OAuth enabled");
+} else {
+  console.log("⚠️  Google OAuth disabled (env vars not set)");
+}
 
 // Serve static files
 app.use("/images", express.static(path.join(__dirname, "public/images")));
