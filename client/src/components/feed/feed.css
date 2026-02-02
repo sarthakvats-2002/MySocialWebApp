@@ -1,17 +1,30 @@
 .feed {
-  @apply flex-1 px-6 py-6 min-h-[calc(100vh-60px)] bg-slate-950;
+  flex: 1;
+  padding: 1.5rem;
+  min-height: calc(100vh - 60px);
+  background-color: #020617;
 }
 
 .feedWrapper {
-  @apply max-w-[680px] mx-auto space-y-6;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .noPosts {
-  @apply text-center py-16 px-6 glassmorphism rounded-xl animate-fadeIn;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .noPosts p {
-  @apply text-slate-400 text-lg;
+  color: #94a3b8;
+  font-size: 1.125rem;
+  margin: 0;
 }
 
 /* Responsive */
