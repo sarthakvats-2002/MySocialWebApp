@@ -301,7 +301,7 @@
   backdrop-filter: blur(40px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 9999px;
-  color: #f1f5f9;
+  color: #ffffff; /* BRIGHT WHITE TEXT - VISIBLE */
   outline: none;
   transition: all 0.3s ease;
 }
