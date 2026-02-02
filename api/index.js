@@ -12,6 +12,8 @@ const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
+const passport = require("passport");
+const session = require("express-session");
 
 // Import routes
 const userRoute = require("./routes/users");
