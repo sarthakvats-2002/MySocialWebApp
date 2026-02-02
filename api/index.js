@@ -141,7 +141,12 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 
 // API Routes
 app.use("/api/auth", authRoute);
-app.use("/api/auth", googleAuthRoute); // Google OAuth routes
+
+// Only enable Google Auth routes if configured
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  app.use("/api/auth", googleAuthRoute); // Google OAuth routes
+}
+
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/conversations", conversationRoute);
