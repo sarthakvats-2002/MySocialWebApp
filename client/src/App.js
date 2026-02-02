@@ -4,6 +4,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Messenger from "./pages/messenger/Messenger";
 import AuthCallback from "./pages/auth/AuthCallback";
+import ErrorBoundary from "./components/ErrorBoundary";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,12 +17,15 @@ import { AuthContext } from "./context/AuthContext";
 function App() {
   const { user } = useContext(AuthContext);
 
+  console.log("App rendering, user:", user ? "Logged in" : "Not logged in");
+
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          {user ? <Home /> : <Redirect to="/register" />}
-        </Route>
+    <ErrorBoundary>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {user ? <Home /> : <Redirect to="/register" />}
+          </Route>
         <Route path="/login">
           {user ? <Redirect to="/" /> : <Login />}
         </Route>
@@ -39,6 +43,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
+    </ErrorBoundary>
   );
 }
 
