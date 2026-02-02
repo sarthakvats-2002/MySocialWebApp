@@ -9,11 +9,13 @@ import { AuthContext } from "../../context/AuthContext";
 import { Chat, PersonAdd, PersonRemove } from "@material-ui/icons";
 import api from "../../apiCalls";
 import toast from "react-hot-toast";
+import { mockUsers, mockPosts } from "../../mockData";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const [followed, setFollowed] = useState(false);
+  const [isMockUser, setIsMockUser] = useState(false);
   const username = useParams().username;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const history = useHistory();
@@ -24,15 +26,30 @@ export default function Profile() {
         const res = await api.get(`/users?username=${username}`);
         setUser(res.data);
         setFollowed(currentUser.followings.includes(res.data._id));
+        setIsMockUser(false);
       } catch (err) {
         console.error("Error fetching user:", err);
-        toast.error("User not found");
+        // Check if it's a mock user
+        const mockUser = mockUsers.find((u) => u.username === username);
+        if (mockUser) {
+          setUser(mockUser);
+          setIsMockUser(true);
+          setFollowed(false);
+          toast.info("This is a demo profile");
+        } else {
+          toast.error("User not found");
+        }
       }
     };
     fetchUser();
   }, [username, currentUser.followings]);
 
   const handleFollow = async () => {
+    if (isMockUser) {
+      toast.info("This is a demo profile. Follow real users to connect!");
+      return;
+    }
+
     try {
       if (followed) {
         await api.put(`/users/${user._id}/unfollow`, { userId: currentUser._id });
@@ -52,6 +69,11 @@ export default function Profile() {
   };
 
   const handleMessage = async () => {
+    if (isMockUser) {
+      toast.info("This is a demo profile. Message real users to chat!");
+      return;
+    }
+
     try {
       // Check if conversation exists
       const res = await api.get(`/conversations/${currentUser._id}`);
@@ -88,7 +110,9 @@ export default function Profile() {
               <img
                 className="profileCoverImg"
                 src={
-                  user.coverPicture
+                  isMockUser
+                    ? user.coverPicture
+                    : user.coverPicture
                     ? PF + user.coverPicture
                     : "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1200&h=400&fit=crop"
                 }
@@ -101,7 +125,9 @@ export default function Profile() {
               <img
                 className="profileUserImg"
                 src={
-                  user.profilePicture
+                  isMockUser
+                    ? user.profilePicture
+                    : user.profilePicture
                     ? PF + user.profilePicture
                     : "https://i.pravatar.cc/150?img=69"
                 }
