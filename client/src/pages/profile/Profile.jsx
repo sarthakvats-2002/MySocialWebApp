@@ -6,7 +6,7 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
-import { Chat, PersonAdd, PersonRemove } from "@material-ui/icons";
+import { Chat, PersonAdd, Close } from "@material-ui/icons";
 import api from "../../apiCalls";
 import toast from "react-hot-toast";
 import { mockUsers, mockPosts } from "../../mockData";
@@ -150,7 +150,7 @@ export default function Profile() {
                   >
                     {followed ? (
                       <>
-                        <PersonRemove /> Unfollow
+                        <Close /> Unfollow
                       </>
                     ) : (
                       <>
