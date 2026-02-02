@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
-import { Add, Remove, PersonAdd } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import api from "../../apiCalls";
 import { mockUsers } from "../../mockData";
 
@@ -163,10 +163,14 @@ export default function Rightbar({ user }) {
                             ? suggestion.profilePicture
                             : suggestion.profilePicture
                             ? PF + suggestion.profilePicture
-                            : PF + "noAvatar.png"
+                            : "https://i.pravatar.cc/150?img=68"
                         }
                         alt=""
                         className="suggestionAvatar"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "https://i.pravatar.cc/150?img=68";
+                        }}
                       />
                       <div className="suggestionInfo">
                         <span className="suggestionUsername">

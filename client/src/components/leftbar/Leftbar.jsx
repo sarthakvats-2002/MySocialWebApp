@@ -35,15 +35,19 @@ export default function Leftbar() {
       <div className="leftbarWrapper">
         {/* User Profile Card */}
         <Link to={`/profile/${user.username}`} className="leftbarProfileCard">
-          <img
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "noAvatar.png"
-            }
-            alt=""
-            className="leftbarProfileImg"
-          />
+        <img
+          src={
+            user.profilePicture
+              ? PF + user.profilePicture
+              : "https://i.pravatar.cc/150?img=68"
+          }
+          alt=""
+          className="leftbarProfileImg"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://i.pravatar.cc/150?img=68";
+          }}
+        />
           <div className="leftbarProfileInfo">
             <span className="leftbarProfileName">{user.username}</span>
             <span className="leftbarProfileBio">View profile</span>

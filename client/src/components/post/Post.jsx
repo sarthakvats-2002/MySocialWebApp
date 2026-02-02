@@ -103,9 +103,13 @@ export default function Post({ post, onDelete, index }) {
                     ? user.profilePicture
                     : user.profilePicture
                     ? PF + user.profilePicture
-                    : PF + "noAvatar.png"
+                    : "https://i.pravatar.cc/150?img=68"
                 }
                 alt=""
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://i.pravatar.cc/150?img=68";
+                }}
               />
             </Link>
             <div className="postUserInfo">
