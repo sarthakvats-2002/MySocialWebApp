@@ -151,11 +151,16 @@ export default function Post({ post, onDelete, index }) {
               className="postCommentText"
               onClick={() => setShowComments(!showComments)}
             >
-              <ChatBubbleOutline fontSize="small" /> {post.comments || 0} comments
+              <ChatBubbleOutline fontSize="small" /> {Array.isArray(post.comments) ? post.comments.length : 0} comments
             </span>
           </div>
         </div>
-        {showComments && <Comments postId={post._id} />}
+        {showComments && (
+          <Comments 
+            postId={post._id} 
+            mockComments={isMockPost ? post.comments : []}
+          />
+        )}
       </div>
     </div>
   );
