@@ -1,206 +1,117 @@
 .share {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  background-color: var(--card-bg);
-  box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
+  @apply w-full glassmorphism rounded-xl p-5 mb-6 animate-fadeIn;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .shareWrapper {
-  padding: 16px;
+  @apply space-y-4;
 }
 
+/* Share Top */
 .shareTop {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  @apply flex items-center gap-4;
 }
 
 .shareProfileImg {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary-color);
+  @apply w-12 h-12 rounded-full object-cover border-2 border-gradient-to-r from-primary-500 to-purple-500;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
 }
 
 .shareInput {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  background-color: var(--bg-tertiary);
-  color: var(--text-primary);
-  font-size: 15px;
-  outline: none;
-  resize: none;
-  min-height: 48px;
-  max-height: 200px;
-  font-family: inherit;
-  transition: all var(--transition-fast);
+  @apply flex-1 px-5 py-3 glassmorphism rounded-full text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary-500/50 focus:bg-white/10 transition-all duration-300 resize-none;
 }
 
-.shareInput:focus {
-  background-color: var(--bg-secondary);
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.1);
-}
-
-.shareInput::placeholder {
-  color: var(--text-secondary);
-}
-
+/* Share Bottom */
 .shareHr {
-  margin: 16px 0;
-  border: none;
-  border-top: 1px solid var(--border-color);
+  @apply border-t border-white/10;
 }
 
 .shareBottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  @apply flex items-center justify-between flex-wrap gap-3;
 }
 
 .shareOptions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  @apply flex items-center gap-3 flex-wrap;
 }
 
 .shareOption {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  border: 1px solid transparent;
-}
-
-.shareOption:hover {
-  background-color: var(--bg-tertiary);
-  border-color: var(--border-color);
+  @apply flex items-center gap-2 px-4 py-2 glassmorphism rounded-lg transition-all duration-300 hover:bg-white/10 hover:scale-105 cursor-pointer;
 }
 
 .shareIcon {
-  font-size: 22px;
+  @apply text-xl;
+}
+
+.shareIcon.photo {
+  @apply text-green-400;
+}
+
+.shareIcon.video {
+  @apply text-red-400;
+}
+
+.shareIcon.tag {
+  @apply text-blue-400;
+}
+
+.shareIcon.location {
+  @apply text-yellow-400;
 }
 
 .shareOptionText {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
+  @apply text-sm font-medium text-slate-200;
 }
 
 .shareButton {
-  padding: 10px 24px;
-  border: none;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.shareButton:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 149, 246, 0.4);
-}
-
-.shareButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  @apply btn-primary px-6 py-2 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
 }
 
 /* Image Preview */
 .shareImgContainer {
-  position: relative;
-  margin-top: 16px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  @apply relative mt-4 rounded-lg overflow-hidden;
 }
 
 .shareImg {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: var(--radius-md);
+  @apply w-full max-h-96 object-cover rounded-lg;
 }
 
 .shareCancelImg {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  color: white;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-fast);
+  @apply absolute top-3 right-3 w-9 h-9 rounded-full glassmorphism-strong flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-red-500/20 hover:scale-110;
 }
 
-.shareCancelImg:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  transform: scale(1.1);
-}
-
-/* Color Variants */
-.shareOption.photo .shareIcon {
-  color: #45bd62;
-}
-
-.shareOption.video .shareIcon {
-  color: #e7475e;
-}
-
-.shareOption.tag .shareIcon {
-  color: #1877f2;
-}
-
-.shareOption.location .shareIcon {
-  color: #f7b928;
+.shareCancelImg svg {
+  @apply text-white w-5 h-5;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .shareWrapper {
-    padding: 12px;
+  .share {
+    @apply p-4 rounded-lg;
   }
 
   .shareOptions {
-    gap: 8px;
+    @apply w-full justify-between;
   }
 
   .shareOption {
-    padding: 6px 12px;
+    @apply px-3 py-1.5;
   }
 
   .shareOptionText {
-    display: none;
+    @apply hidden;
   }
 
   .shareButton {
-    padding: 8px 16px;
-    font-size: 13px;
+    @apply w-full justify-center;
   }
 }
 
 /* Loading State */
 .share.uploading {
-  opacity: 0.6;
-  pointer-events: none;
+  @apply opacity-60 pointer-events-none;
+}
+
+.share.uploading::after {
+  content: '';
+  @apply absolute inset-0 glassmorphism rounded-xl flex items-center justify-center;
 }

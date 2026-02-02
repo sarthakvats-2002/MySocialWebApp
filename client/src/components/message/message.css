@@ -1,288 +1,82 @@
-/* Message Container */
 .message {
-  display: flex;
-  flex-direction: column;
-  margin: 4px 0;
-  animation: fadeIn 0.3s ease-out;
+  @apply flex flex-col mb-3 animate-fadeIn;
 }
 
 .message.own {
-  align-items: flex-end;
+  @apply items-end;
 }
 
 /* Message Bubble */
 .messageTop {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  max-width: 70%;
+  @apply flex items-end gap-2 max-w-[70%];
 }
 
 .message.own .messageTop {
-  flex-direction: row-reverse;
+  @apply flex-row-reverse;
 }
 
 .messageImg {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--border-color);
-  flex-shrink: 0;
+  @apply w-8 h-8 rounded-full object-cover border-2 border-primary-500/50 flex-shrink-0;
 }
 
 .messageText {
-  padding: 10px 14px;
-  border-radius: 16px;
-  max-width: 100%;
-  word-wrap: break-word;
-  position: relative;
-  box-shadow: var(--shadow-sm);
+  @apply px-4 py-2.5 rounded-2xl max-w-full break-words shadow-lg;
 }
 
-/* Other User's Message (Left) */
+/* Other User's Message */
 .message:not(.own) .messageText {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-bottom-left-radius: 4px;
+  @apply glassmorphism-strong text-slate-100;
 }
 
-/* Own Message (Right) */
+/* Own Message */
 .message.own .messageText {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-  color: white;
-  border-bottom-right-radius: 4px;
+  @apply bg-gradient-to-r from-primary-600 to-purple-600 text-white;
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
 /* Message Time */
 .messageBottom {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  margin-top: 4px;
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.message.own .messageBottom {
-  justify-content: flex-end;
-}
-
-/* Message Status Icons (for own messages) */
-.messageStatus {
-  display: inline-flex;
-  align-items: center;
-}
-
-.messageStatus svg {
-  font-size: 14px;
-}
-
-.messageStatus.sent {
-  color: var(--text-tertiary);
-}
-
-.messageStatus.delivered {
-  color: var(--text-tertiary);
-}
-
-.messageStatus.read {
-  color: var(--primary-color);
+  @apply text-[10px] text-slate-500 mt-1 px-1;
 }
 
 /* Message Groups */
 .messageGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.messageGroup .message {
-  margin: 0;
+  @apply space-y-1;
 }
 
 .messageGroup .message:not(:last-child) .messageText {
-  border-radius: 16px;
+  @apply rounded-2xl;
 }
 
 .messageGroup .message:last-child.own .messageText {
-  border-bottom-right-radius: 4px;
+  @apply rounded-br-md;
 }
 
 .messageGroup .message:last-child:not(.own) .messageText {
-  border-bottom-left-radius: 4px;
+  @apply rounded-bl-md;
 }
 
 /* Hide avatar for grouped messages except last */
 .messageGroup .message:not(:last-child) .messageImg {
-  visibility: hidden;
-}
-
-/* Long press context menu */
-.messageContextMenu {
-  position: absolute;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  padding: 8px 0;
-  min-width: 120px;
-  z-index: 1000;
-  animation: scaleIn 0.2s ease-out;
-}
-
-.messageContextMenuItem {
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--text-primary);
-  transition: background-color var(--transition-fast);
-}
-
-.messageContextMenuItem:hover {
-  background-color: var(--bg-tertiary);
-}
-
-.messageContextMenuItem.danger {
-  color: var(--error-color);
+  @apply invisible;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .messageTop {
-    max-width: 85%;
+    @apply max-w-[85%];
   }
 
   .messageText {
-    font-size: 14px;
-    padding: 8px 12px;
+    @apply px-3 py-2 text-sm;
   }
 
   .messageImg {
-    width: 28px;
-    height: 28px;
+    @apply w-7 h-7;
   }
 }
 
-/* Dark Mode Adjustments */
+/* Dark Mode */
 .dark .message:not(.own) .messageText {
-  background-color: var(--bg-tertiary);
-  border-color: var(--border-color);
-}
-
-/* Hover Effects */
-.message:hover .messageBottom {
-  opacity: 1;
-}
-
-.messageBottom {
-  opacity: 0.6;
-  transition: opacity var(--transition-fast);
-}
-
-/* Link Preview in Messages */
-.messageLinkPreview {
-  margin-top: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background-color: var(--bg-tertiary);
-}
-
-.messageLinkPreviewImg {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.messageLinkPreviewContent {
-  padding: 12px;
-}
-
-.messageLinkPreviewTitle {
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-  color: var(--text-primary);
-}
-
-.messageLinkPreviewDesc {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-/* Image Messages */
-.messageImage {
-  max-width: 300px;
-  border-radius: 12px;
-  margin-top: 4px;
-  cursor: pointer;
-  transition: transform var(--transition-fast);
-}
-
-.messageImage:hover {
-  transform: scale(1.02);
-}
-
-/* Voice Messages */
-.voiceMessage {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-}
-
-.voiceMessageButton {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-fast);
-}
-
-.voiceMessageButton:hover {
-  transform: scale(1.1);
-}
-
-.voiceMessageWaveform {
-  flex: 1;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-}
-
-.voiceMessageDuration {
-  font-size: 11px;
-  opacity: 0.8;
-}
-
-/* Reply Message */
-.messageReply {
-  padding: 8px 12px;
-  margin-bottom: 4px;
-  border-left: 3px solid var(--primary-color);
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.messageReplyAuthor {
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-
-.messageReplyText {
-  opacity: 0.8;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply bg-slate-800/80 border border-white/10;
 }

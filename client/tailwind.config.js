@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  darkMode: 'class',
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       colors: {
@@ -19,28 +16,31 @@ module.exports = {
           800: '#075985',
           900: '#0c4a6e',
         },
+        success: {
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+        },
+        danger: {
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+        },
+        warning: {
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+        },
       },
-      animation: {
-        'fade-in': 'fadeIn 0.3s ease-in',
-        'slide-up': 'slideUp 0.3s ease-out',
-        'slide-down': 'slideDown 0.3s ease-out',
+      boxShadow: {
+        'glow-primary': '0 0 20px rgba(14, 165, 233, 0.5)',
+        'glow-purple': '0 0 20px rgba(168, 85, 247, 0.5)',
+        'glow-success': '0 0 20px rgba(34, 197, 94, 0.5)',
       },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },
   plugins: [],
-}
-
+};

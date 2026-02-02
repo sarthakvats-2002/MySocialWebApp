@@ -1,167 +1,101 @@
 .leftbar {
-  flex: 3;
-  max-width: 280px;
-  height: calc(100vh - 60px);
-  overflow-y: auto;
-  position: sticky;
-  top: 60px;
-  background-color: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
+  @apply flex-shrink-0 w-72 h-[calc(100vh-60px)] overflow-y-auto sticky top-[60px] glassmorphism border-r border-white/10;
 }
 
 .leftbarWrapper {
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @apply p-5 space-y-4;
 }
 
 /* Profile Card */
 .leftbarProfileCard {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  margin: 0 12px;
-  border-radius: var(--radius-lg);
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-decoration: none;
-}
-
-.leftbarProfileCard:hover {
-  background-color: var(--bg-tertiary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  @apply flex items-center gap-3 p-4 glassmorphism-strong rounded-xl transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] card-hover cursor-pointer;
 }
 
 .leftbarProfileImg {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary-color);
+  @apply w-12 h-12 rounded-full object-cover border-2 border-gradient-to-r from-primary-500 to-purple-500;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
 }
 
 .leftbarProfileInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
+  @apply flex-1 min-w-0;
 }
 
 .leftbarProfileName {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply text-base font-semibold text-slate-100 truncate;
 }
 
 .leftbarProfileBio {
-  font-size: 12px;
-  color: var(--text-secondary);
+  @apply text-xs text-slate-400;
 }
 
 /* Divider */
 .leftbarDivider {
-  border: none;
-  height: 1px;
-  background-color: var(--border-color);
-  margin: 8px 16px;
+  @apply border-t border-white/10;
 }
 
 /* Navigation */
 .leftbarNav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 0 12px;
+  @apply space-y-2;
 }
 
 .leftbarNavItem {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.leftbarNavItem:hover {
-  background-color: var(--bg-tertiary);
+  @apply flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] cursor-pointer;
 }
 
 .leftbarNavItem.active {
-  background-color: var(--primary-color);
-  color: white;
+  @apply bg-gradient-to-r from-primary-600/30 to-purple-600/30 border border-primary-500/50;
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
 }
 
 .leftbarNavIcon {
-  color: inherit;
-  font-size: 24px;
+  @apply text-slate-300 transition-colors duration-300;
+}
+
+.leftbarNavItem:hover .leftbarNavIcon {
+  @apply text-primary-400;
+}
+
+.leftbarNavItem.active .leftbarNavIcon {
+  @apply text-primary-400;
 }
 
 .leftbarNavText {
-  font-size: 15px;
-  font-weight: 500;
-  color: inherit;
+  @apply text-sm font-medium text-slate-200;
 }
 
 /* Logout Button */
 .leftbarLogoutBtn {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 28px;
-  margin: 0 12px;
-  border-radius: var(--radius-md);
-  border: none;
-  background-color: transparent;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.leftbarLogoutBtn:hover {
-  background-color: var(--bg-tertiary);
-  color: var(--error-color);
+  @apply flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-red-500/20 hover:scale-[1.02] cursor-pointer w-full border-none bg-transparent;
 }
 
 .leftbarLogoutBtn .leftbarNavIcon {
-  color: inherit;
+  @apply text-red-400;
+}
+
+.leftbarLogoutBtn .leftbarNavText {
+  @apply text-red-400;
 }
 
 /* Scrollbar */
 .leftbar::-webkit-scrollbar {
-  width: 6px;
+  @apply w-2;
 }
 
 .leftbar::-webkit-scrollbar-track {
-  background: transparent;
+  @apply bg-transparent;
 }
 
 .leftbar::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 3px;
+  @apply bg-slate-700 rounded-full;
 }
 
 .leftbar::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  @apply bg-slate-600;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
   .leftbar {
-    display: none;
+    @apply hidden;
   }
 }

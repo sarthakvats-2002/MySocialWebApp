@@ -1,326 +1,184 @@
 .post {
-  width: 100%;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  margin-bottom: 24px;
-  animation: fadeIn 0.3s ease-out;
-  overflow: hidden;
+  @apply w-full glassmorphism rounded-xl p-5 mb-6 card-hover animate-fadeIn;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .postWrapper {
-  padding: 0;
+  @apply space-y-4;
 }
 
+/* Post Top */
 .postTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
+  @apply flex items-center justify-between;
 }
 
 .postTopLeft {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @apply flex items-center gap-3;
 }
 
 .postProfileImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border-color);
-  cursor: pointer;
-  transition: transform var(--transition-fast);
+  @apply w-11 h-11 rounded-full object-cover border-2 border-primary-500 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-glow-primary;
 }
 
-.postProfileImg:hover {
-  transform: scale(1.05);
+.postUserInfo {
+  @apply flex flex-col;
 }
 
 .postUsername {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-
-.postUsername:hover {
-  color: var(--text-secondary);
+  @apply text-base font-semibold text-slate-100 cursor-pointer hover:text-primary-400 transition-colors duration-300;
 }
 
 .postDate {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 2px;
+  @apply text-xs text-slate-400;
 }
 
 .postTopRight {
-  position: relative;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color var(--transition-fast);
-}
-
-.postTopRight:hover {
-  background-color: var(--bg-tertiary);
+  @apply cursor-pointer text-slate-400 hover:text-slate-200 transition-colors duration-300 relative;
 }
 
 .deleteBox {
-  position: absolute;
-  right: 0;
-  top: 40px;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-md);
-  padding: 8px 0;
-  min-width: 120px;
-  z-index: 100;
-  animation: scaleIn 0.2s ease-out;
+  @apply absolute top-10 right-0 glassmorphism-strong rounded-lg px-4 py-2 text-sm font-medium text-red-400 cursor-pointer transition-all duration-300 hover:bg-red-500/20 hover:text-red-300 whitespace-nowrap z-10 animate-scaleIn;
 }
 
-.deleteBox div {
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--error-color);
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
-}
-
-.deleteBox div:hover {
-  background-color: var(--bg-tertiary);
-}
-
+/* Post Center */
 .postCenter {
-  padding: 0;
+  @apply space-y-3;
 }
 
 .postText {
-  padding: 0 16px 12px 16px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-primary);
-  word-wrap: break-word;
+  @apply text-slate-200 leading-relaxed;
 }
 
 .postImg {
-  width: 100%;
-  max-height: 600px;
-  object-fit: cover;
-  display: block;
-  background-color: var(--bg-tertiary);
-  cursor: pointer;
+  @apply w-full max-h-[500px] object-cover rounded-lg cursor-pointer transition-all duration-300 hover:scale-[1.02];
 }
 
+/* Post Bottom */
 .postBottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 16px;
+  @apply flex items-center justify-between pt-4 border-t border-white/10;
 }
 
 .postBottomLeft {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  @apply flex items-center gap-4;
 }
 
-.likeIcon,
-.postCommentIcon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  color: var(--text-primary);
-  transition: all var(--transition-fast);
+.reactionButton {
+  @apply relative flex items-center gap-2 px-3 py-1.5 glassmorphism rounded-full transition-all duration-300 hover:bg-white/10 hover:scale-105 cursor-pointer;
 }
 
-.likeIcon:hover,
-.postCommentIcon:hover {
-  transform: scale(1.1);
-  opacity: 0.7;
+.reactionIcon {
+  @apply w-5 h-5 transition-all duration-300;
 }
 
-.likeIcon.liked {
-  color: var(--accent-color);
-  animation: heartBeat 0.3s ease;
+.likeCounter {
+  @apply text-sm font-medium text-slate-300;
 }
 
-@keyframes heartBeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+.reactionsDropdown {
+  @apply absolute bottom-full left-0 mb-2 glassmorphism-strong rounded-full px-3 py-2 flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 animate-scaleIn;
 }
 
-.postLikeCounter,
-.postCommentCounter {
-  font-size: 13px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color var(--transition-fast);
+.reactionsDropdown.active {
+  @apply opacity-100 pointer-events-auto;
 }
 
-.postLikeCounter:hover,
-.postCommentCounter:hover {
-  color: var(--text-primary);
+.reactionOption {
+  @apply text-2xl cursor-pointer transition-all duration-300 hover:scale-125;
 }
 
-.postBottomRight {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.postCommentText {
+  @apply text-sm text-slate-400 cursor-pointer transition-colors duration-300 hover:text-primary-400 font-medium;
 }
 
 /* Comments Section */
 .commentsSection {
-  border-top: 1px solid var(--border-color);
-  padding: 16px;
-  background-color: var(--bg-primary);
+  @apply mt-4 pt-4 border-t border-white/10 space-y-3 animate-fadeIn;
 }
 
-.commentsList {
-  max-height: 400px;
-  overflow-y: auto;
-  margin-bottom: 16px;
-}
-
-.comment {
-  display: flex;
-  gap: 12px;
-  padding: 12px 0;
-  animation: fadeIn 0.3s ease-out;
+.commentItem {
+  @apply flex items-start gap-3 p-3 rounded-lg glassmorphism hover:bg-white/5 transition-all duration-300;
 }
 
 .commentAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
+  @apply w-9 h-9 rounded-full object-cover border-2 border-primary-500/50;
 }
 
 .commentContent {
-  flex: 1;
+  @apply flex-1;
 }
 
 .commentHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  @apply flex items-center gap-2 mb-1;
 }
 
 .commentUsername {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-primary);
+  @apply text-sm font-semibold text-slate-100;
 }
 
-.commentDate {
-  font-size: 11px;
-  color: var(--text-secondary);
+.commentTime {
+  @apply text-xs text-slate-500;
 }
 
 .commentText {
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--text-primary);
-  word-wrap: break-word;
-}
-
-.commentActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.commentAction {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-
-.commentAction:hover {
-  color: var(--text-primary);
-}
-
-.addCommentSection {
-  display: flex;
-  gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border-color);
+  @apply text-sm text-slate-300 leading-relaxed;
 }
 
 .commentInput {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  font-size: 14px;
-  outline: none;
-  transition: all var(--transition-fast);
+  @apply flex items-center gap-3 mt-3;
 }
 
-.commentInput:focus {
-  border-color: var(--primary-color);
-  background-color: var(--bg-secondary);
-}
-
-.commentInput::placeholder {
-  color: var(--text-secondary);
+.commentInputField {
+  @apply flex-1 px-4 py-2 glassmorphism rounded-full text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all duration-300;
 }
 
 .commentSubmit {
-  padding: 0 16px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: var(--radius-full);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.commentSubmit:hover:not(:disabled) {
-  background-color: var(--primary-hover);
-}
-
-.commentSubmit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.noComments {
-  text-align: center;
-  padding: 24px;
-  color: var(--text-secondary);
-  font-size: 13px;
+  @apply px-4 py-2 btn-primary rounded-full text-sm;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .post {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    margin-bottom: 16px;
+    @apply p-4 mb-4 rounded-lg;
+  }
+
+  .postProfileImg {
+    @apply w-10 h-10;
   }
 
   .postImg {
-    max-height: 500px;
+    @apply rounded-lg;
   }
 
-  .commentsList {
-    max-height: 300px;
+  .postBottom {
+    @apply flex-col items-start gap-3;
   }
+
+  .postBottomLeft {
+    @apply w-full justify-between;
+  }
+}
+
+/* Skeleton Loader */
+.postSkeleton {
+  @apply w-full glassmorphism rounded-xl p-5 mb-6 animate-pulse;
+}
+
+.postSkeletonHeader {
+  @apply flex items-center gap-3 mb-4;
+}
+
+.postSkeletonAvatar {
+  @apply w-11 h-11 rounded-full bg-slate-700;
+}
+
+.postSkeletonInfo {
+  @apply flex-1 space-y-2;
+}
+
+.postSkeletonLine {
+  @apply h-3 bg-slate-700 rounded;
+}
+
+.postSkeletonImage {
+  @apply w-full h-64 bg-slate-700 rounded-lg mb-4;
 }

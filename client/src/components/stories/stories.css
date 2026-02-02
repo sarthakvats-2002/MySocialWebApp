@@ -1,412 +1,173 @@
-/* Stories Container */
 .stories {
-  display: flex;
-  gap: 12px;
-  padding: 16px 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 24px;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 16px;
+  @apply flex gap-4 p-5 overflow-x-auto mb-6 glassmorphism rounded-xl animate-fadeIn;
+  scrollbar-width: thin;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Hide scrollbar but keep functionality */
 .stories::-webkit-scrollbar {
-  display: none;
+  @apply h-2;
 }
 
-.stories {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.stories::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.stories::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 rounded-full;
+}
+
+.stories::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600;
 }
 
 /* Story Card */
 .storyCard {
-  position: relative;
-  min-width: 120px;
-  height: 200px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-  border: 2px solid var(--border-color);
-}
-
-.storyCard:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
+  @apply relative min-w-[120px] h-[200px] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-glow-primary flex-shrink-0;
 }
 
 .storyImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  @apply w-full h-full object-cover;
 }
 
 .storyProfileImg {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid var(--primary-color);
-  object-fit: cover;
-  box-shadow: var(--shadow-md);
+  @apply absolute top-3 left-3 w-10 h-10 rounded-full border-3 border-primary-500 object-cover;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.7);
 }
 
 .storyUsername {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply absolute bottom-3 left-3 right-3 text-white text-sm font-semibold text-shadow truncate;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 /* Add Story Card */
 .addStory {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 2px dashed rgba(255, 255, 255, 0.5);
+  @apply bg-gradient-to-br from-primary-600 to-purple-600 flex flex-col items-center justify-center gap-3 border-2 border-dashed border-white/30 relative;
+}
+
+.addStory::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-primary-500 to-purple-500 opacity-0 transition-opacity duration-300;
+}
+
+.addStory:hover::before {
+  @apply opacity-20;
 }
 
 .addStory .storyImg {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid white;
-  margin-bottom: 8px;
+  @apply w-14 h-14 rounded-full border-3 border-white mb-2;
 }
 
 .addStory .storyUsername {
-  position: static;
-  color: white;
-  text-align: center;
-  font-size: 12px;
+  @apply static text-center font-medium;
 }
 
 .storyAddIcon {
-  position: absolute;
-  bottom: 60px;
-  width: 32px;
-  height: 32px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-color);
-  box-shadow: var(--shadow-md);
+  @apply absolute bottom-16 w-8 h-8 bg-white rounded-full flex items-center justify-center text-primary-600 shadow-lg;
 }
 
 /* Story Modal */
 .storyModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--z-modal);
-  animation: fadeIn 0.3s ease-out;
+  @apply fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] animate-fadeIn;
 }
 
 .storyModalContent {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: scaleIn 0.3s ease-out;
+  @apply glassmorphism-strong rounded-xl p-8 max-w-lg w-11/12 max-h-[90vh] overflow-y-auto animate-scaleIn;
 }
 
 .storyModalContent h3 {
-  margin: 0 0 24px 0;
-  font-size: 24px;
-  color: var(--text-primary);
-  text-align: center;
+  @apply text-2xl font-bold gradient-text mb-6;
 }
 
 .storyFileInput {
-  width: 100%;
-  padding: 12px;
-  border: 2px dashed var(--border-color);
-  border-radius: var(--radius-md);
-  margin-bottom: 16px;
-  cursor: pointer;
-  background-color: var(--bg-tertiary);
-  transition: all var(--transition-fast);
-}
-
-.storyFileInput:hover {
-  border-color: var(--primary-color);
+  @apply w-full p-4 glassmorphism rounded-lg border-2 border-dashed border-white/20 cursor-pointer transition-all duration-300 hover:border-primary-500/50 hover:bg-white/5;
 }
 
 .storyPreview {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-  margin-bottom: 16px;
-  background-color: var(--bg-tertiary);
+  @apply w-full max-h-80 object-contain rounded-lg mb-4 glassmorphism p-2;
 }
 
 .storyTextInput {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 14px;
-  margin-bottom: 24px;
-  outline: none;
-  transition: all var(--transition-fast);
-}
-
-.storyTextInput:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 149, 246, 0.1);
+  @apply w-full px-4 py-3 glassmorphism rounded-lg text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all duration-300 mb-6;
 }
 
 .storyModalButtons {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-}
-
-.storyCancelBtn,
-.storyShareBtn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  @apply flex gap-3 justify-end;
 }
 
 .storyCancelBtn {
-  background-color: var(--bg-tertiary);
-  color: var(--text-primary);
-}
-
-.storyCancelBtn:hover {
-  background-color: var(--border-color);
+  @apply btn-secondary;
 }
 
 .storyShareBtn {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-  color: white;
-}
-
-.storyShareBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  @apply btn-primary;
 }
 
 /* Story Viewer */
 .storyViewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--z-modal);
-  animation: fadeIn 0.3s ease-out;
+  @apply fixed inset-0 bg-black/95 backdrop-blur-lg flex items-center justify-center z-[100] animate-fadeIn;
 }
 
 .storyViewerContent {
-  position: relative;
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  animation: slideInRight 0.3s ease-out;
+  @apply relative max-w-md w-11/12 max-h-[90vh] glassmorphism-strong rounded-2xl overflow-hidden animate-scaleIn;
 }
 
 .storyHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
+  @apply absolute top-0 left-0 right-0 z-10 p-4 flex items-center gap-3 bg-gradient-to-b from-black/60 to-transparent;
 }
 
 .storyViewerProfileImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid white;
-  object-fit: cover;
+  @apply w-10 h-10 rounded-full border-2 border-white object-cover;
 }
 
 .storyHeader span {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  @apply text-white text-sm font-semibold drop-shadow-lg;
 }
 
 .storyViewerImg {
-  width: 100%;
-  height: 100%;
-  max-height: 80vh;
-  object-fit: contain;
-  display: block;
-  background-color: black;
+  @apply w-full max-h-[80vh] object-contain bg-slate-900;
 }
 
 .storyViewerText {
-  position: absolute;
-  bottom: 80px;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  text-align: center;
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  @apply absolute bottom-20 left-0 right-0 text-center text-white text-lg font-medium px-6 py-4 bg-gradient-to-t from-black/60 to-transparent;
 }
 
 .storyNavigation {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  @apply absolute bottom-0 left-0 right-0 p-5 flex items-center justify-between bg-gradient-to-t from-black/60 to-transparent;
 }
 
 .storyPrev,
 .storyNext {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.storyPrev:hover,
-.storyNext:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+  @apply w-11 h-11 rounded-full glassmorphism-strong flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/20;
 }
 
 .storyCounter {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  @apply text-white text-sm font-semibold drop-shadow-lg;
 }
 
 /* Progress Indicators */
 .storyProgress {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  display: flex;
-  gap: 4px;
-  z-index: 3;
+  @apply absolute top-2 left-2 right-2 flex gap-1 z-20;
 }
 
 .storyProgressBar {
-  flex: 1;
-  height: 3px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  overflow: hidden;
+  @apply flex-1 h-1 bg-white/30 rounded-full overflow-hidden;
 }
 
 .storyProgressFill {
-  height: 100%;
-  background-color: white;
-  transition: width 0.1s linear;
+  @apply h-full bg-white transition-all duration-100;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .stories {
-    padding: 12px;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
+    @apply p-3 gap-3 rounded-lg;
   }
 
   .storyCard {
-    min-width: 100px;
-    height: 180px;
+    @apply min-w-[100px] h-[180px];
   }
 
   .storyModalContent {
-    padding: 24px;
+    @apply p-6;
   }
-
-  .storyViewerContent {
-    width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
-  }
-}
-
-/* Loading State */
-.storiesLoading {
-  display: flex;
-  gap: 12px;
-  padding: 16px;
-}
-
-.storyCardSkeleton {
-  min-width: 120px;
-  height: 200px;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-lg);
-  animation: shimmer 1.5s infinite;
 }

@@ -1,31 +1,21 @@
 import "./topbar.css";
-import {
-  Search,
-  Chat,
-  Notifications,
-  ExitToApp,
-  Brightness4,
-  Brightness7,
-} from "@material-ui/icons";
+import { Search, Chat, Notifications, Home, Settings, ExitToApp } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { ThemeContext } from "../../context/ThemeContext";
 import { SocketContext } from "../../context/SocketContext";
 import { logoutCall } from "../../apiCalls";
 import api from "../../apiCalls";
-import toast from "react-hot-toast";
 
 export default function Topbar() {
   const { user, dispatch } = useContext(AuthContext);
-  const { darkMode, toggle } = useContext(ThemeContext);
   const { onlineUsers, socket } = useContext(SocketContext);
-  // eslint-disable-next-line no-unused-vars
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const history = useHistory();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -49,59 +39,69 @@ export default function Topbar() {
       socket.on("getNotification", (notification) => {
         setNotifications((prev) => [notification, ...prev]);
         setUnreadCount((prev) => prev + 1);
-        toast.success(`New ${notification.type} notification`);
       });
     }
   }, [socket]);
 
-  // Handle search
-  const handleSearch = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    if (query.trim()) {
-      setShowSearch(true);
-      try {
-        const res = await api.get(`/users/search?q=${query}`);
-        setSearchResults(res.data);
-      } catch (err) {
-        console.error("Search error:", err);
+  // Search functionality
+  useEffect(() => {
+    const searchUsers = async () => {
+      if (searchQuery.length > 0) {
+        try {
+          const res = await api.get(`/users/search?q=${searchQuery}`);
+          setSearchResults(res.data);
+          setShowSearch(true);
+        } catch (err) {
+          console.error("Error searching users:", err);
+        }
+      } else {
+        setSearchResults([]);
+        setShowSearch(false);
       }
-    } else {
-      setShowSearch(false);
-      setSearchResults([]);
-    }
-  };
+    };
+
+    const debounce = setTimeout(() => {
+      searchUsers();
+    }, 300);
+
+    return () => clearTimeout(debounce);
+  }, [searchQuery]);
 
   const handleLogout = async () => {
     await logoutCall(user._id, dispatch);
     history.push("/login");
-    toast.success("Logged out successfully");
   };
 
   return (
-    <div className="topbarContainer">
-      <div className="topbarLeft">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">🔥 EchoConnect</span>
+    <div className="topbar">
+      <div className="topbarWrapper">
+        {/* Logo */}
+        <Link to="/" className="topbarLeft">
+          <div className="logoContainer">
+            <div className="logoGlow"></div>
+            <span className="logo">🔥</span>
+          </div>
+          <span className="logoText">EchoConnect</span>
         </Link>
-      </div>
-      <div className="topbarCenter">
-        <div className="searchbar">
-          <Search className="searchIcon" />
-          <input
-            placeholder="Search for friends..."
-            className="searchInput"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
+
+        {/* Search */}
+        <div className="topbarCenter">
+          <div className="searchbar">
+            <Search className="searchIcon" />
+            <input
+              placeholder="Search for friends..."
+              className="searchInput"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
           {showSearch && searchResults.length > 0 && (
-            <div className="searchResults">
-              {searchResults.map((result) => (
+            <div className="searchDropdown">
+              {searchResults.map((user) => (
                 <Link
-                  key={result._id}
-                  to={`/profile/${result.username}`}
-                  className="searchResultItem"
+                  key={user._id}
+                  to={`/profile/${user.username}`}
+                  className="searchResult"
                   onClick={() => {
                     setShowSearch(false);
                     setSearchQuery("");
@@ -109,55 +109,86 @@ export default function Topbar() {
                 >
                   <img
                     src={
-                      result.profilePicture
-                        ? PF + result.profilePicture
+                      user.profilePicture
+                        ? PF + user.profilePicture
                         : PF + "noAvatar.png"
                     }
                     alt=""
                     className="searchResultImg"
                   />
-                  <span>{result.username}</span>
+                  <span className="searchResultName">{user.username}</span>
                 </Link>
               ))}
             </div>
           )}
         </div>
-      </div>
-      <div className="topbarRight">
-        <div className="topbarIcons">
-          <div className="topbarIconItem" onClick={toggle}>
-            {darkMode ? <Brightness7 /> : <Brightness4 />}
-          </div>
-          <Link to="/messenger">
-            <div className="topbarIconItem">
-              <Chat />
-              {onlineUsers.length > 1 && (
-                <span className="topbarIconBadge">{onlineUsers.length - 1}</span>
-              )}
-            </div>
+
+        {/* Right Icons */}
+        <div className="topbarRight">
+          <Link to="/" className="topbarIconContainer">
+            <Home className="topbarIcon" />
           </Link>
-          <div className="topbarIconItem">
-            <Notifications />
+
+          <Link to="/messenger" className="topbarIconContainer">
+            <Chat className="topbarIcon" />
+            {onlineUsers.length > 0 && (
+              <span className="topbarIconBadge">{onlineUsers.length}</span>
+            )}
+          </Link>
+
+          <div
+            className="topbarIconContainer"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
+            <Notifications className="topbarIcon" />
             {unreadCount > 0 && (
               <span className="topbarIconBadge">{unreadCount}</span>
             )}
           </div>
-          <div className="topbarIconItem" onClick={handleLogout}>
-            <ExitToApp />
-          </div>
+
+          <div className="topbarDivider"></div>
+
+          <Link to={`/profile/${user.username}`} className="topbarProfile">
+            <img
+              src={
+                user.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "noAvatar.png"
+              }
+              alt=""
+              className="topbarProfileImg"
+            />
+            <span className="topbarUsername">{user.username}</span>
+          </Link>
+
+          <button className="topbarLogout" onClick={handleLogout}>
+            <ExitToApp className="topbarIcon" />
+          </button>
         </div>
-        <Link to={`/profile/${user.username}`}>
-          <img
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "noAvatar.png"
-            }
-            alt=""
-            className="topbarImg"
-          />
-        </Link>
       </div>
+
+      {/* Notifications Dropdown */}
+      {showNotifications && (
+        <div className="notificationsDropdown">
+          <h3 className="notificationsTitle">Notifications</h3>
+          {notifications.length === 0 ? (
+            <p className="noNotifications">No notifications yet</p>
+          ) : (
+            notifications.map((notif) => (
+              <div key={notif._id} className="notificationItem">
+                <div className="notificationContent">
+                  <span className="notificationText">
+                    New {notif.type} notification
+                  </span>
+                  <span className="notificationTime">
+                    {new Date(notif.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

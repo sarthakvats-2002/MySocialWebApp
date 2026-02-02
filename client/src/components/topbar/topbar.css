@@ -1,196 +1,162 @@
-.topbarContainer {
-  height: 60px;
-  width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+.topbar {
+  @apply glassmorphism border-b border-white/10 sticky top-0 z-50 backdrop-blur-2xl;
 }
 
-.dark .topbarContainer {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+.topbarWrapper {
+  @apply max-w-[1800px] mx-auto px-6 py-3 flex items-center justify-between gap-6;
 }
 
+/* Logo */
 .topbarLeft {
-  flex: 3;
+  @apply flex items-center gap-3 transition-all duration-300 hover:scale-105;
+}
+
+.logoContainer {
+  @apply relative;
+}
+
+.logoGlow {
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-lg blur-lg opacity-50 animate-pulse-glow;
 }
 
 .logo {
-  font-size: 26px;
-  margin-left: 20px;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  letter-spacing: 1px;
+  @apply relative text-3xl;
 }
 
+.logoText {
+  @apply text-2xl font-bold gradient-text;
+}
+
+/* Search */
 .topbarCenter {
-  flex: 5;
-  position: relative;
+  @apply flex-1 max-w-xl relative;
 }
 
 .searchbar {
-  width: 90%;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-}
-
-.searchbar:focus-within {
-  background-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  @apply glassmorphism rounded-full px-4 py-2.5 flex items-center gap-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500/50 focus-within:bg-white/10;
 }
 
 .searchIcon {
-  font-size: 22px !important;
-  margin-left: 15px;
-  color: white;
+  @apply text-slate-400;
 }
 
 .searchInput {
-  border: none;
-  background: transparent;
-  width: 70%;
-  padding: 0 15px;
-  color: white;
-  font-size: 14px;
+  @apply flex-1 bg-transparent border-none outline-none text-slate-100 placeholder-slate-400;
 }
 
-.searchInput::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.searchDropdown {
+  @apply absolute top-full mt-2 w-full glassmorphism-strong rounded-lg p-2 max-h-96 overflow-y-auto animate-scaleIn;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.searchInput:focus {
-  outline: none;
-}
-
-.searchResults {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  width: 90%;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: var(--bg-primary);
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease;
-  z-index: 1000;
-}
-
-.searchResultItem {
-  display: flex;
-  align-items: center;
-  padding: 12px 15px;
-  color: var(--text-primary);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.searchResultItem:hover {
-  background-color: var(--bg-secondary);
-}
-
-.searchResultItem:last-child {
-  border-bottom: none;
+.searchResult {
+  @apply flex items-center gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-white/10;
 }
 
 .searchResultImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 12px;
+  @apply w-10 h-10 rounded-full object-cover border-2 border-primary-500;
 }
 
+.searchResultName {
+  @apply text-slate-100 font-medium;
+}
+
+/* Right Section */
 .topbarRight {
-  flex: 4;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  gap: 10px;
+  @apply flex items-center gap-3;
 }
 
-.topbarIcons {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+.topbarIconContainer {
+  @apply relative p-2.5 glassmorphism rounded-lg transition-all duration-300 hover:bg-white/10 hover:scale-110 cursor-pointer;
 }
 
-.topbarIconItem {
-  cursor: pointer;
-  position: relative;
-  color: white;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.topbarIconItem:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+.topbarIcon {
+  @apply text-slate-200 w-6 h-6;
 }
 
 .topbarIconBadge {
-  min-width: 18px;
-  height: 18px;
-  background-color: #ff4757;
-  border-radius: 10px;
-  color: white;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 0 5px;
-  border: 2px solid var(--primary-color);
+  @apply absolute -top-1 -right-1 bg-gradient-to-r from-red-600 to-pink-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse;
 }
 
-.topbarImg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+.topbarDivider {
+  @apply w-px h-8 bg-white/10;
 }
 
-.topbarImg:hover {
-  border-color: white;
-  transform: scale(1.05);
+.topbarProfile {
+  @apply flex items-center gap-2 px-3 py-1.5 glassmorphism rounded-full transition-all duration-300 hover:bg-white/10 hover:scale-105;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+.topbarProfileImg {
+  @apply w-9 h-9 rounded-full object-cover border-2 border-primary-500;
+}
+
+.topbarUsername {
+  @apply text-slate-100 font-medium text-sm;
+}
+
+.topbarLogout {
+  @apply p-2.5 glassmorphism rounded-lg transition-all duration-300 hover:bg-red-500/20 hover:scale-110 cursor-pointer border-none bg-transparent;
+}
+
+.topbarLogout .topbarIcon {
+  @apply text-red-400;
+}
+
+/* Notifications Dropdown */
+.notificationsDropdown {
+  @apply absolute right-6 top-16 w-96 glassmorphism-strong rounded-lg p-4 max-h-96 overflow-y-auto animate-scaleIn;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.notificationsTitle {
+  @apply text-lg font-bold text-slate-100 mb-3;
+}
+
+.noNotifications {
+  @apply text-slate-400 text-center py-8;
+}
+
+.notificationItem {
+  @apply p-3 rounded-lg transition-all duration-300 hover:bg-white/5 mb-2;
+}
+
+.notificationContent {
+  @apply flex flex-col gap-1;
+}
+
+.notificationText {
+  @apply text-slate-200 font-medium;
+}
+
+.notificationTime {
+  @apply text-xs text-slate-400;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .topbarCenter {
+    @apply max-w-sm;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .topbarUsername {
+    @apply hidden;
   }
 }
-  
-  
-  
-  
-  
+
+@media (max-width: 768px) {
+  .topbarWrapper {
+    @apply px-4 py-2;
+  }
+
+  .logoText {
+    @apply hidden;
+  }
+
+  .topbarCenter {
+    @apply max-w-xs;
+  }
+
+  .topbarProfile {
+    @apply px-2;
+  }
+}
