@@ -1,82 +1,61 @@
 .message {
-  @apply flex flex-col mb-3 animate-fadeIn;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .message.own {
-  @apply items-end;
+  align-items: flex-end;
 }
 
-/* Message Bubble */
 .messageTop {
-  @apply flex items-end gap-2 max-w-[70%];
-}
-
-.message.own .messageTop {
-  @apply flex-row-reverse;
+  display: flex;
+  gap: 0.75rem;
 }
 
 .messageImg {
-  @apply w-8 h-8 rounded-full object-cover border-2 border-primary-500/50 flex-shrink-0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1877f2;
 }
 
 .messageText {
-  @apply px-4 py-2.5 rounded-2xl max-w-full break-words shadow-lg;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 500px;
+  color: #f1f5f9;
+  font-size: 0.938rem;
+  line-height: 1.5;
+  word-wrap: break-word;
 }
 
-/* Other User's Message */
-.message:not(.own) .messageText {
-  @apply glassmorphism-strong text-slate-100;
-}
-
-/* Own Message */
 .message.own .messageText {
-  @apply bg-gradient-to-r from-primary-600 to-purple-600 text-white;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+  background: linear-gradient(135deg, #005fcc, #a855f7);
+  border: none;
+  color: white;
+  border-top-right-radius: 0.25rem;
 }
 
-/* Message Time */
 .messageBottom {
-  @apply text-[10px] text-slate-500 mt-1 px-1;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 0.375rem;
+  padding: 0 0.5rem;
 }
 
-/* Message Groups */
-.messageGroup {
-  @apply space-y-1;
-}
-
-.messageGroup .message:not(:last-child) .messageText {
-  @apply rounded-2xl;
-}
-
-.messageGroup .message:last-child.own .messageText {
-  @apply rounded-br-md;
-}
-
-.messageGroup .message:last-child:not(.own) .messageText {
-  @apply rounded-bl-md;
-}
-
-/* Hide avatar for grouped messages except last */
-.messageGroup .message:not(:last-child) .messageImg {
-  @apply invisible;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .messageTop {
-    @apply max-w-[85%];
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  .messageText {
-    @apply px-3 py-2 text-sm;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-
-  .messageImg {
-    @apply w-7 h-7;
-  }
-}
-
-/* Dark Mode */
-.dark .message:not(.own) .messageText {
-  @apply bg-slate-800/80 border border-white/10;
 }

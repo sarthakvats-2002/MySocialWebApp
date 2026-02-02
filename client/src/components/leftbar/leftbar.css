@@ -1,101 +1,160 @@
 .leftbar {
-  @apply flex-shrink-0 w-72 h-[calc(100vh-60px)] overflow-y-auto sticky top-[60px] glassmorphism border-r border-white/10;
+  flex-shrink: 0;
+  width: 18rem;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  position: sticky;
+  top: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .leftbarWrapper {
-  @apply p-5 space-y-4;
+  padding: 1.25rem;
 }
 
-/* Profile Card */
 .leftbarProfileCard {
-  @apply flex items-center gap-3 p-4 glassmorphism-strong rounded-xl transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] card-hover cursor-pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(60px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.leftbarProfileCard:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
 }
 
 .leftbarProfileImg {
-  @apply w-12 h-12 rounded-full object-cover border-2 border-gradient-to-r from-primary-500 to-purple-500;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1877f2;
   box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
 }
 
 .leftbarProfileInfo {
-  @apply flex-1 min-w-0;
+  flex: 1;
+  min-width: 0;
 }
 
 .leftbarProfileName {
-  @apply text-base font-semibold text-slate-100 truncate;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .leftbarProfileBio {
-  @apply text-xs text-slate-400;
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
-/* Divider */
 .leftbarDivider {
-  @apply border-t border-white/10;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
 }
 
-/* Navigation */
 .leftbarNav {
-  @apply space-y-2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .leftbarNavItem {
-  @apply flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-white/10 hover:scale-[1.02] cursor-pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.leftbarNavItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
 }
 
 .leftbarNavItem.active {
-  @apply bg-gradient-to-r from-primary-600/30 to-purple-600/30 border border-primary-500/50;
+  background: linear-gradient(to right, rgba(24, 119, 242, 0.3), rgba(168, 85, 247, 0.3));
+  border: 1px solid rgba(24, 119, 242, 0.5);
   box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
 }
 
 .leftbarNavIcon {
-  @apply text-slate-300 transition-colors duration-300;
+  color: #cbd5e1;
+  transition: color 0.3s ease;
 }
 
-.leftbarNavItem:hover .leftbarNavIcon {
-  @apply text-primary-400;
-}
-
+.leftbarNavItem:hover .leftbarNavIcon,
 .leftbarNavItem.active .leftbarNavIcon {
-  @apply text-primary-400;
+  color: #4aa6ff;
 }
 
 .leftbarNavText {
-  @apply text-sm font-medium text-slate-200;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
-/* Logout Button */
 .leftbarLogoutBtn {
-  @apply flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-red-500/20 hover:scale-[1.02] cursor-pointer w-full border-none bg-transparent;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: transparent;
+  margin-top: 0.5rem;
+}
+
+.leftbarLogoutBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: scale(1.02);
 }
 
 .leftbarLogoutBtn .leftbarNavIcon {
-  @apply text-red-400;
+  color: #f87171;
 }
 
 .leftbarLogoutBtn .leftbarNavText {
-  @apply text-red-400;
+  color: #f87171;
 }
 
-/* Scrollbar */
 .leftbar::-webkit-scrollbar {
-  @apply w-2;
+  width: 0.5rem;
 }
 
 .leftbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 .leftbar::-webkit-scrollbar-thumb {
-  @apply bg-slate-700 rounded-full;
+  background: #475569;
+  border-radius: 9999px;
 }
 
 .leftbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-600;
+  background: #64748b;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .leftbar {
-    @apply hidden;
+    display: none;
   }
 }

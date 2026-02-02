@@ -1,72 +1,80 @@
-/* Base Skeleton */
 .skeleton {
-  @apply bg-slate-700/50 animate-shimmer;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Post Skeleton */
-.skeleton-post {
-  @apply w-full glassmorphism rounded-xl p-5 mb-6 animate-pulse;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+.skeletonShimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
 }
 
-.skeleton-header {
-  @apply flex items-center gap-3 mb-4;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-.skeleton-avatar {
-  @apply w-11 h-11 rounded-full bg-slate-700;
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 }
 
-.skeleton-info {
-  @apply flex-1 space-y-2;
+.postSkeleton {
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
-.skeleton-line {
-  @apply h-3 bg-slate-700 rounded;
+.storySkeleton {
+  min-width: 7rem;
+  height: 11rem;
+  border-radius: 0.75rem;
 }
 
-.skeleton-line.short {
-  @apply w-2/3;
+.userSkeleton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
 }
 
-.skeleton-line.x-short {
-  @apply w-1/3;
+.skeletonAvatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #475569;
 }
 
-.skeleton-line.long {
-  @apply w-11/12;
+.skeletonLine {
+  height: 0.75rem;
+  background: #475569;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
-.skeleton-line.medium {
-  @apply w-4/5;
+.skeletonLine.short {
+  width: 60%;
 }
 
-.skeleton-content {
-  @apply space-y-3 mb-4;
+.skeletonLine.medium {
+  width: 80%;
 }
 
-.skeleton-image {
-  @apply w-full h-64 bg-slate-700 rounded-lg;
+.skeletonLine.long {
+  width: 100%;
 }
 
-.skeleton-footer {
-  @apply flex justify-between pt-4 border-t border-white/10;
-}
-
-/* Story Skeleton */
-.skeleton-story-card {
-  @apply min-w-[120px] h-[200px] rounded-xl bg-slate-700 flex-shrink-0 animate-pulse;
-}
-
-/* User Suggestion Skeleton */
-.skeleton-user-suggestion {
-  @apply flex items-center justify-between gap-3 p-2 animate-pulse;
-}
-
-.skeleton-user-suggestion .skeleton-avatar {
-  @apply w-11 h-11 rounded-full bg-slate-700;
-}
-
-.skeleton-button {
-  @apply w-16 h-8 bg-slate-700 rounded-full;
+.skeletonImage {
+  width: 100%;
+  height: 16rem;
+  background: #475569;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
 }

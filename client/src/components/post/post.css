@@ -1,184 +1,384 @@
 .post {
-  @apply w-full glassmorphism rounded-xl p-5 mb-6 card-hover animate-fadeIn;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.6);
 }
 
 .postWrapper {
-  @apply space-y-4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* Post Top */
 .postTop {
-  @apply flex items-center justify-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .postTopLeft {
-  @apply flex items-center gap-3;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .postProfileImg {
-  @apply w-11 h-11 rounded-full object-cover border-2 border-primary-500 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-glow-primary;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1877f2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.postProfileImg:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.6);
 }
 
 .postUserInfo {
-  @apply flex flex-col;
+  display: flex;
+  flex-direction: column;
 }
 
 .postUsername {
-  @apply text-base font-semibold text-slate-100 cursor-pointer hover:text-primary-400 transition-colors duration-300;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.postUsername:hover {
+  color: #4aa6ff;
 }
 
 .postDate {
-  @apply text-xs text-slate-400;
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
 .postTopRight {
-  @apply cursor-pointer text-slate-400 hover:text-slate-200 transition-colors duration-300 relative;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.postTopRight:hover {
+  color: #e2e8f0;
 }
 
 .deleteBox {
-  @apply absolute top-10 right-0 glassmorphism-strong rounded-lg px-4 py-2 text-sm font-medium text-red-400 cursor-pointer transition-all duration-300 hover:bg-red-500/20 hover:text-red-300 whitespace-nowrap z-10 animate-scaleIn;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(60px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #f87171;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  z-index: 10;
+  animation: scaleIn 0.5s ease-out;
+}
+
+.deleteBox:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
 }
 
 /* Post Center */
 .postCenter {
-  @apply space-y-3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .postText {
-  @apply text-slate-200 leading-relaxed;
+  color: #e2e8f0;
+  line-height: 1.625;
 }
 
 .postImg {
-  @apply w-full max-h-[500px] object-cover rounded-lg cursor-pointer transition-all duration-300 hover:scale-[1.02];
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.postImg:hover {
+  transform: scale(1.02);
 }
 
 /* Post Bottom */
 .postBottom {
-  @apply flex items-center justify-between pt-4 border-t border-white/10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .postBottomLeft {
-  @apply flex items-center gap-4;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .reactionButton {
-  @apply relative flex items-center gap-2 px-3 py-1.5 glassmorphism rounded-full transition-all duration-300 hover:bg-white/10 hover:scale-105 cursor-pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.reactionButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
 }
 
 .reactionIcon {
-  @apply w-5 h-5 transition-all duration-300;
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: all 0.3s ease;
 }
 
 .likeCounter {
-  @apply text-sm font-medium text-slate-300;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #cbd5e1;
 }
 
 .reactionsDropdown {
-  @apply absolute bottom-full left-0 mb-2 glassmorphism-strong rounded-full px-3 py-2 flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 animate-scaleIn;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(60px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  animation: scaleIn 0.5s ease-out;
 }
 
 .reactionsDropdown.active {
-  @apply opacity-100 pointer-events-auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .reactionOption {
-  @apply text-2xl cursor-pointer transition-all duration-300 hover:scale-125;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reactionOption:hover {
+  transform: scale(1.25);
 }
 
 .postCommentText {
-  @apply text-sm text-slate-400 cursor-pointer transition-colors duration-300 hover:text-primary-400 font-medium;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+.postCommentText:hover {
+  color: #4aa6ff;
 }
 
 /* Comments Section */
 .commentsSection {
-  @apply mt-4 pt-4 border-t border-white/10 space-y-3 animate-fadeIn;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .commentItem {
-  @apply flex items-start gap-3 p-3 rounded-lg glassmorphism hover:bg-white/5 transition-all duration-300;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.commentItem:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .commentAvatar {
-  @apply w-9 h-9 rounded-full object-cover border-2 border-primary-500/50;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(24, 119, 242, 0.5);
 }
 
 .commentContent {
-  @apply flex-1;
+  flex: 1;
 }
 
 .commentHeader {
-  @apply flex items-center gap-2 mb-1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .commentUsername {
-  @apply text-sm font-semibold text-slate-100;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #f1f5f9;
 }
 
 .commentTime {
-  @apply text-xs text-slate-500;
+  font-size: 0.75rem;
+  color: #64748b;
 }
 
 .commentText {
-  @apply text-sm text-slate-300 leading-relaxed;
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  line-height: 1.625;
 }
 
 .commentInput {
-  @apply flex items-center gap-3 mt-3;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .commentInputField {
-  @apply flex-1 px-4 py-2 glassmorphism rounded-full text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all duration-300;
+  flex: 1;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  color: #f1f5f9;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.commentInputField::placeholder {
+  color: #94a3b8;
+}
+
+.commentInputField:focus {
+  border-color: rgba(24, 119, 242, 0.5);
+  box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
 }
 
 .commentSubmit {
-  @apply px-4 py-2 btn-primary rounded-full text-sm;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #005fcc, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.commentSubmit:hover {
+  background: linear-gradient(to right, #1877f2, #a855f7);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.5);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .post {
-    @apply p-4 mb-4 rounded-lg;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
   }
 
   .postProfileImg {
-    @apply w-10 h-10;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .postImg {
-    @apply rounded-lg;
+    border-radius: 0.5rem;
   }
 
   .postBottom {
-    @apply flex-col items-start gap-3;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .postBottomLeft {
-    @apply w-full justify-between;
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
-/* Skeleton Loader */
-.postSkeleton {
-  @apply w-full glassmorphism rounded-xl p-5 mb-6 animate-pulse;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.postSkeletonHeader {
-  @apply flex items-center gap-3 mb-4;
-}
-
-.postSkeletonAvatar {
-  @apply w-11 h-11 rounded-full bg-slate-700;
-}
-
-.postSkeletonInfo {
-  @apply flex-1 space-y-2;
-}
-
-.postSkeletonLine {
-  @apply h-3 bg-slate-700 rounded;
-}
-
-.postSkeletonImage {
-  @apply w-full h-64 bg-slate-700 rounded-lg mb-4;
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

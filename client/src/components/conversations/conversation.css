@@ -1,118 +1,45 @@
 .conversation {
-  @apply flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 hover:bg-white/10 relative;
+  display: flex;
+  align-items: center;
+  padding: 0.875rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  gap: 0.75rem;
+}
+
+.conversation:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .conversation.active {
-  @apply bg-gradient-to-r from-primary-600/20 to-purple-600/20 border border-primary-500/30;
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
-}
-
-/* Avatar with Online Badge */
-.conversationImgContainer {
-  @apply relative mr-3 flex-shrink-0;
+  background: linear-gradient(to right, rgba(24, 119, 242, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(24, 119, 242, 0.5);
 }
 
 .conversationImg {
-  @apply w-12 h-12 rounded-full object-cover border-2 border-primary-500/50;
-}
-
-.conversationOnlineBadge {
-  @apply absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-success-400 border-2 border-slate-900;
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
-}
-
-/* Conversation Details */
-.conversationDetails {
-  @apply flex-1 min-w-0;
-}
-
-.conversationTop {
-  @apply flex items-center justify-between mb-1;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1877f2;
+  box-shadow: 0 0 10px rgba(24, 119, 242, 0.4);
 }
 
 .conversationName {
-  @apply text-sm font-semibold text-slate-100 truncate;
+  font-weight: 600;
+  color: #f1f5f9;
+  font-size: 0.938rem;
 }
 
-.conversationTime {
-  @apply text-xs text-slate-500 flex-shrink-0 ml-2;
-}
-
-.conversationBottom {
-  @apply flex items-center justify-between;
-}
-
-.conversationLastMessage {
-  @apply text-xs text-slate-400 truncate flex-1;
-}
-
-.conversationLastMessage.unread {
-  @apply font-semibold text-slate-200;
-}
-
-/* Unread Badge */
-.conversationUnread {
-  @apply bg-gradient-to-r from-primary-600 to-purple-600 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 flex-shrink-0 ml-2;
-  box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
-}
-
-/* Typing Indicator */
-.conversationTyping {
-  @apply flex items-center gap-1 text-primary-400 text-xs font-medium italic;
-}
-
-.conversationTyping .typingDot {
-  @apply w-1 h-1 rounded-full bg-primary-400 animate-bounce;
-}
-
-.conversationTyping .typingDot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.conversationTyping .typingDot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-/* Skeleton Loader */
-.conversationSkeleton {
-  @apply flex items-center p-3 gap-3 animate-pulse;
-}
-
-.conversationSkeletonAvatar {
-  @apply w-12 h-12 rounded-full bg-slate-700;
-}
-
-.conversationSkeletonContent {
-  @apply flex-1 space-y-2;
-}
-
-.conversationSkeletonLine {
-  @apply h-3 bg-slate-700 rounded;
-}
-
-.conversationSkeletonLine.short {
-  @apply w-2/3;
-}
-
-.conversationSkeletonLine.shorter {
-  @apply w-1/2;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .conversation {
-    @apply p-2.5;
-  }
-
   .conversationImg {
-    @apply w-11 h-11;
+    width: 2.5rem;
+    height: 2.5rem;
   }
-
+  
   .conversationName {
-    @apply text-sm;
-  }
-
-  .conversationLastMessage {
-    @apply text-xs;
+    font-size: 0.875rem;
   }
 }

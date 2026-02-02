@@ -30,16 +30,13 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .feed {
-    @apply px-4 py-4;
   }
 }
 
 @media (max-width: 768px) {
   .feed {
-    @apply px-3 py-3;
   }
 
   .feedWrapper {
-    @apply max-w-full;
   }
 }
