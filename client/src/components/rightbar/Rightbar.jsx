@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
 import { Add, Remove, PersonAdd } from "@material-ui/icons";
 import api from "../../apiCalls";
+import { mockUsers } from "../../mockData";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -65,19 +66,24 @@ export default function Rightbar({ user }) {
       if (!user && currentUser?._id) {
         try {
           setLoading(true);
-          // Get all users and filter out current user and already followed users
+          // Get real users from API
           const res = await api.get("/users/all");
-          const filtered = res.data
+          const realSuggestions = res.data
             .filter(
               (u) =>
                 u._id !== currentUser._id &&
                 !currentUser.followings?.includes(u._id)
             )
-            .slice(0, 5); // Show only 5 suggestions
-          setSuggestions(filtered);
+            .slice(0, 5); // Show only 5 real suggestions
+          
+          // Combine with mock users (always show 10 total)
+          const combinedSuggestions = [...realSuggestions, ...mockUsers].slice(0, 10);
+          setSuggestions(combinedSuggestions);
         } catch (err) {
           console.error("Error fetching suggestions:", err);
-        } finally {
+          // If API fails, just show mock users
+          setSuggestions(mockUsers.slice(0, 10));
+        } finally{
           setLoading(false);
         }
       }
@@ -137,38 +143,49 @@ export default function Rightbar({ user }) {
                   <UserSkeleton />
                 </>
               ) : (
-                suggestions.map((suggestion) => (
-                <div key={suggestion._id} className="suggestionItem">
-                  <Link
-                    to={`/profile/${suggestion.username}`}
-                    className="suggestionUser"
+                suggestions.map((suggestion, idx) => {
+                  const isMockUser = suggestion._id.startsWith("mock");
+                  return (
+                  <div 
+                    key={suggestion._id} 
+                    className="suggestionItem"
+                    style={{ 
+                      animation: `fadeIn 0.5s ease-out ${idx * 0.1}s both` 
+                    }}
                   >
-                    <img
-                      src={
-                        suggestion.profilePicture
-                          ? PF + suggestion.profilePicture
-                          : PF + "noAvatar.png"
-                      }
-                      alt=""
-                      className="suggestionAvatar"
-                    />
-                    <div className="suggestionInfo">
-                      <span className="suggestionUsername">
-                        {suggestion.username}
-                      </span>
-                      <span className="suggestionMutual">
-                        {suggestion.followers?.length || 0} followers
-                      </span>
-                    </div>
-                  </Link>
-                  <button
-                    className="suggestionFollow"
-                    onClick={() => handleFollowSuggestion(suggestion._id)}
-                  >
-                    Follow
+                    <Link
+                      to={`/profile/${suggestion.username}`}
+                      className="suggestionUser"
+                    >
+                      <img
+                        src={
+                          isMockUser
+                            ? suggestion.profilePicture
+                            : suggestion.profilePicture
+                            ? PF + suggestion.profilePicture
+                            : PF + "noAvatar.png"
+                        }
+                        alt=""
+                        className="suggestionAvatar"
+                      />
+                      <div className="suggestionInfo">
+                        <span className="suggestionUsername">
+                          {suggestion.username}
+                        </span>
+                        <span className="suggestionMutual">
+                          {suggestion.followers?.length || 0} followers
+                        </span>
+                      </div>
+                    </Link>
+                    <button
+                      className="suggestionFollow"
+                      onClick={() => handleFollowSuggestion(suggestion._id)}
+                    >
+                      Follow
                   </button>
                 </div>
-              ))
+                );
+              })
               )}
             </div>
           </div>

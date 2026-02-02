@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Add } from "@material-ui/icons";
 import api from "../../apiCalls";
 import toast from "react-hot-toast";
+import { mockStories } from "../../mockData";
 
 export default function Stories() {
   const [stories, setStories] = useState([]);
@@ -18,7 +19,7 @@ export default function Stories() {
       try {
         const res = await api.get(`/stories/timeline/${user._id}`);
         
-        // Group stories by user
+        // Group real stories by user
         const groupedStories = res.data.reduce((acc, story) => {
           if (!acc[story.userId]) {
             acc[story.userId] = [];
@@ -27,9 +28,16 @@ export default function Stories() {
           return acc;
         }, {});
 
-        setStories(Object.values(groupedStories));
+        // Add mock stories (each story in its own group)
+        const mockStoryGroups = mockStories.map(story => [story]);
+        
+        // Combine real and mock stories
+        const allStories = [...Object.values(groupedStories), ...mockStoryGroups];
+        setStories(allStories);
       } catch (err) {
         console.error("Error fetching stories:", err);
+        // If API fails, just show mock stories
+        setStories(mockStories.map(story => [story]));
       }
     };
     fetchStories();
@@ -144,7 +152,19 @@ function StoryCard({ stories }) {
   const [user, setUser] = useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  const isMockStory = stories[0]._id && stories[0]._id.startsWith("story");
+
   useEffect(() => {
+    // If it's a mock story, use embedded user data
+    if (isMockStory) {
+      setUser({
+        username: stories[0].username,
+        profilePicture: stories[0].userProfilePic,
+      });
+      return;
+    }
+
+    // Otherwise fetch user from API
     const fetchUser = async () => {
       try {
         const res = await api.get(`/users?userId=${stories[0].userId}`);
@@ -154,7 +174,7 @@ function StoryCard({ stories }) {
       }
     };
     fetchUser();
-  }, [stories]);
+  }, [stories, isMockStory]);
 
   const handleNext = () => {
     if (currentIndex < stories.length - 1) {
@@ -176,13 +196,17 @@ function StoryCard({ stories }) {
     <>
       <div className="storyCard" onClick={() => setShowStory(true)}>
         <img
-          src={PF + stories[0].img}
+          src={isMockStory ? stories[0].img : PF + stories[0].img}
           alt=""
           className="storyImg"
         />
         <img
           src={
-            user.profilePicture ? PF + user.profilePicture : PF + "noAvatar.png"
+            isMockStory
+              ? user.profilePicture
+              : user.profilePicture
+              ? PF + user.profilePicture
+              : PF + "noAvatar.png"
           }
           alt=""
           className="storyProfileImg"
@@ -196,7 +220,11 @@ function StoryCard({ stories }) {
             <div className="storyHeader">
               <img
                 src={
-                  user.profilePicture ? PF + user.profilePicture : PF + "noAvatar.png"
+                  isMockStory
+                    ? user.profilePicture
+                    : user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "noAvatar.png"
                 }
                 alt=""
                 className="storyViewerProfileImg"
@@ -204,7 +232,7 @@ function StoryCard({ stories }) {
               <span>{user.username}</span>
             </div>
             <img
-              src={PF + stories[currentIndex].img}
+              src={isMockStory ? stories[currentIndex].img : PF + stories[currentIndex].img}
               alt=""
               className="storyViewerImg"
             />

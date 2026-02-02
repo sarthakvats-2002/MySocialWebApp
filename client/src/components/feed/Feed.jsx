@@ -6,6 +6,7 @@ import PostSkeleton from "../skeleton/PostSkeleton";
 import "./feed.css";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../apiCalls";
+import { mockPosts } from "../../mockData";
 
 export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
@@ -18,13 +19,19 @@ export default function Feed({ username }) {
       const res = username
         ? await api.get("/posts/profile/" + username)
         : await api.get("/posts/timeline/" + user._id);
-      setPosts(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+      
+      const realPosts = res.data || [];
+      
+      // Combine real posts with mock posts (real posts first)
+      const combinedPosts = [...realPosts, ...mockPosts].sort((p1, p2) => {
+        return new Date(p2.createdAt) - new Date(p1.createdAt);
+      });
+      
+      setPosts(combinedPosts);
     } catch (err) {
       console.error("Error fetching posts:", err);
+      // If API fails, just show mock posts
+      setPosts(mockPosts);
     } finally {
       setLoading(false);
     }
@@ -55,11 +62,9 @@ export default function Feed({ username }) {
             <PostSkeleton />
             <PostSkeleton />
           </>
-        ) : posts.length === 0 ? (
-          <div className="noPosts">No posts yet. Start sharing!</div>
         ) : (
-          posts.map((p) => (
-            <Post key={p._id} post={p} onDelete={handleDeletePost} />
+          posts.map((p, index) => (
+            <Post key={p._id} post={p} onDelete={handleDeletePost} index={index} />
           ))
         )}
       </div>
